@@ -65,7 +65,7 @@ export default function SignUp() {
   return (
     <Form className="form" method="POST">
       <h2 className="title">Регистрация</h2>
-      <p className="title-text">Введите email и придумайте пароль</p>
+      <p className="title-text">Введите email и придумайте пароль</p>
       <div className="form-container">
         <FormInput name="email" type="email" />
         <FormInput name="password" type="password" />
