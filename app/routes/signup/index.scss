@@ -1,0 +1,149 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 448px;
+    padding: 40px 64px 40px 64px;
+    margin-top: 33px;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    border-radius: 24px;
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .title {
+        font-family: 'Poppins-SemiBold', sans-serif, Arial;
+        font-size: 24px;
+        font-weight: 600;
+        padding: 0;
+        margin: 0;
+    }
+
+    .title-text {
+        font-family: 'Poppins-Regular', sans-serif, Arial;
+        font-size: 16px;
+        line-height: 24px;
+        padding: 0;
+        margin: 0;
+        margin-top: 28px;
+        margin-bottom: 40px;
+    }
+
+
+    .label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-family: 'Poppins-Regular', sans-serif, Arial;
+        font-size: 16px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .input-container {
+        position: relative;
+        display: flex;
+        box-sizing: border-box;
+
+        .input {
+            color: rgb(0, 0, 0);
+            position: relative;
+            box-sizing: border-box;
+            border: 1px solid rgb(158, 155, 152);
+            border-radius: 12px;
+            padding: 10px 12px 10px 12px;
+            width: 320px;
+
+            &:focus {
+                outline: none;
+                border: 1px solid rgb(38, 126, 255);
+            }
+
+            &:disabled {
+                border: 1px solid rgb(226, 226, 226);
+            }
+        }
+
+        .icon {
+            position: absolute;
+            right: 12px;
+            top: 9px;
+            width: 24px;
+            height: 24px;
+        }
+
+        .error {
+            border: 1px solid rgb(229, 76, 121);
+        }
+    }
+
+    .text {
+        padding: 0;
+        margin: 0;
+        color: rgb(158, 155, 152);
+
+    }
+
+    .error {
+        margin: 0;
+        padding: 0;
+        color: red;
+        font-family: "Poppins-Regular", sans-serif, Arial;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0%;
+    }
+
+    .submit-btn {
+        width: 320px;
+        height: 48px;
+        box-sizing: border-box;
+        padding: 14px 24px 14px 24px;
+        margin: 0;
+        margin-bottom: 12px;
+        margin-top: 36px;
+        background-color: rgb(252, 224, 0);
+        border-radius: 12px;
+        border: none;
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(224, 199, 0);
+        }
+
+        &:disabled {
+            background-color: rgb(201, 199, 198);
+        }
+    }
+
+    .back-btn {
+        width: 320px;
+        height: 48px;
+        box-sizing: border-box;
+        padding: 14px 24px 14px 24px;
+        margin: 0;
+        border: none;
+        border-radius: 12px;
+        background-color: inherit;
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        cursor: pointer;
+        color: #000;
+
+        &:hover {
+            background-color: rgb(226, 226, 226);
+        }
+
+        &:disabled {
+            background-color: rgb(226, 226, 226);
+        }
+    }
+}

@@ -1,0 +1,74 @@
+@import 'variables';
+
+//Параметры текста для заголовков
+
+@mixin heading_1 () {
+    font-family: $heading_font_family;
+    font-size: $heading_1_font_size;
+    line-height: $heading_1_3_line_height;
+}
+
+@mixin heading_2 () {
+    font-family: $heading_font_family;
+    font-size: $heading_2_font_size;
+    line-height: $heading_1_3_line_height;
+}
+
+@mixin heading_3 () {
+    font-family: $heading_font_family;
+    font-size: $heading_3_font_size;
+    line-height: $heading_1_3_line_height;
+}
+
+@mixin heading_4 () {
+    font-family: $heading_font_family;
+    font-size: $heading_4_font_size;
+    line-height: $heading_4_line_height;
+}
+
+//Параметры текста для параграфов
+
+@mixin paragraph_large() {
+    font-family: $paragraph_font_family;
+    font-size: $paragraph_large_font_size;
+    line-height: $paragraph_large_line_height;
+}
+
+@mixin paragraph_medium() {
+    font-family: $paragraph_font_family;
+    font-size: $paragraph_medium_font_size;
+    line-height: $paragraph_medium_line_height;
+}
+
+@mixin paragraph_small() {
+    font-family: $paragraph_font_family;
+    font-size: $paragraph_small_font_size;
+    line-height: $paragraph_small_line_height;
+}
+
+//Параметры текста для описания
+
+@mixin caption_large() {
+    font-family: $caption_font_family;
+    font-size: $caption_large_font_size;
+    line-height:$caption_large_line_height;
+}
+
+@mixin caption_medium() {
+    font-family: $caption_font_family;
+    font-size: $caption_medium_font_size;
+    line-height:$caption_medium_line_height;
+}
+
+@mixin caption_small() {
+    font-family: $caption_font_family;
+    font-size: $caption_small_font_size;
+    line-height:$caption_small_line_height;
+}
+
+//Параметры текста для описания(Bold)
+@mixin caption_bold() {
+    font-family: $caption_bold_font_family;
+    font-size: $caption_bold_font_size;
+    line-height:$caption_bold_line_height;
+}
