@@ -1,4 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import "./index.scss";
+import "./checkbox.css";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   InputAnketaKeys,
   InputAnketaLabels,
@@ -6,13 +9,19 @@ import {
   anketaFormSchema,
   anketaSlideFields,
   isAnketaSlideKey,
-} from 'contracts/anketa/anketa';
-import { checkOptions, radioOptions } from 'contracts/anketa/options';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+} from "contracts/anketa/anketa";
+import { checkOptions, radioOptions } from "contracts/anketa/options";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "@remix-run/react";
 
 export function AnketaForm() {
+  const [count, setCount] = useState(0);
+  const slide = `Slide${count}`;
+  console.log(count);
+
   const slidesCount = Object.keys(anketaSlideFields).length;
+  const navigation = useNavigate();
 
   const {
     trigger,
@@ -21,18 +30,12 @@ export function AnketaForm() {
     formState: { isSubmitting, errors },
   } = useForm<ZAnketaForm>({
     resolver: zodResolver(anketaFormSchema),
-    mode: 'onBlur',
+    mode: "onBlur",
   });
 
-  const onSubmit = async (data: ZAnketaForm) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
-  };
-
-  const [count, setCount] = useState(0);
+  const onSubmit = (data: ZAnketaForm) => {};
 
   const increment = async () => {
-    const slide = `Slide${count}`;
     if (isAnketaSlideKey(slide)) {
       const fields = anketaSlideFields[slide];
       const isCurrentSlideValid = await trigger(fields);
@@ -47,10 +50,14 @@ export function AnketaForm() {
   const decrement = () => setCount((prev) => --prev);
 
   const FormInput = ({ name }: { name: InputAnketaKeys }) => (
-    <label>
-      {InputAnketaLabels[name]}
-      <input type="text" {...register(name)} />
-      {errors[name] && <p>{`${errors[name]?.message}`}</p>}
+    <label className="input-container">
+      <p className="input-text">{InputAnketaLabels[name]}</p>
+      <input
+        className={errors[name] ? "input input-error" : "input"}
+        type="text"
+        {...register(name)}
+      />
+      {errors[name] && <p className="error">{`${errors[name]?.message}`}</p>}
     </label>
   );
 
@@ -62,14 +69,36 @@ export function AnketaForm() {
     const options = radioOptions[name];
 
     return (
-      <fieldset>
-        {options.map((option, index) => (
-          <label key={index}>
-            <input type="radio" value={option.value} {...register(name)} />
-            {option.label}
-          </label>
-        ))}
-        {errors[name] && <p>{`${errors[name]?.message}`}</p>}
+      <fieldset className="radio-container">
+        <div className="radio">
+          <p
+            className="required"
+            style={{ alignSelf: "flex-start", margin: 0, padding: 0 }}
+          >
+            *
+          </p>
+          {options.map((option, index) => (
+            <label key={index} className="option-container">
+              <input
+                className="option-input"
+                type="radio"
+                value={option.value}
+                {...register(name)}
+              />
+              <p
+                className={`${count == 6 ? "option-text-dif" : "option-text"}`}
+              >
+                {option.label}
+              </p>
+            </label>
+          ))}
+        </div>
+        {errors[name] && (
+          <p
+            style={{ marginTop: "16px" }}
+            className="error"
+          >{`${errors[name]?.message}`}</p>
+        )}
       </fieldset>
     );
   };
@@ -82,108 +111,220 @@ export function AnketaForm() {
     const options = checkOptions[name];
 
     return (
-      <fieldset>
-        {options.map((option, index) => (
-          <label key={index}>
-            <input type="checkbox" value={option.value} {...register(name)} />
-            {option.label}
-          </label>
-        ))}
-        {errors[name] && <p>{`${errors[name]?.message}`}</p>}
+      <fieldset className="checkbox-container">
+        <div className="checkbox">
+          <p
+            className="required"
+            style={{ alignSelf: "flex-start", margin: 0, padding: 0 }}
+          >
+            *
+          </p>
+          {options.map((option, index) => (
+            <label key={index} className="checkbox-option-container">
+              <input
+                type="checkbox"
+                className="checkbox-input"
+                value={option.value}
+                {...register(name)}
+              />
+              <p className="checkbox-option-text">{option.label}</p>
+              <span className="checkmark"></span>
+            </label>
+          ))}
+
+          {errors[name] && (
+            <p
+              style={{ marginTop: "16px" }}
+              className="error"
+            >{`${errors[name]?.message}`}</p>
+          )}
+        </div>
       </fieldset>
     );
   };
 
+  const ConfirmCheckboxForm = () => {
+
+  }
+
   return (
     <div>
       <form
+        className="anketa-container"
         onSubmit={handleSubmit(onSubmit)}
         // onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
       >
-        {count === 0 && (
+        {count >= 1 && (
+          <div className="progress-container">
+            {Array.from({ length: slidesCount }, (_, i) => (
+              <div
+                key={i}
+                className={`progress ${count - 1 >= i && "active"} ${
+                  i < count - 1 && "past"
+                }`}
+              ></div>
+            ))}
+          </div>
+        )}
+        {count == 0 && (
           <>
-            <h3>Остался ещё один шаг — заполнить анкету</h3>
-            <p>
+            <h3 className="title">Остался ещё один шаг — заполнить анкету</h3>
+            <p className="text">
               Эти данные помогут нам идентифицировать вас на мероприятии и вам
               не нужно будет заполнять эту анкету ещё раз
             </p>
           </>
         )}
-        {count === 1 && (
+        {count == 1 && (
           <>
-            <h3>Как вас зовут?</h3>
-            <FormInput name="firstName" />
-            <FormInput name="lastName" />
+            <h3
+              style={{ marginBottom: "40px", marginTop: 0 }}
+              className="title"
+            >
+              Как вас зовут?
+            </h3>
+            <div className="input-wrapper">
+              <FormInput name="firstName" />
+              <FormInput name="lastName" />
+            </div>
           </>
         )}
-        {count === 2 && (
+        {count == 2 && (
           <>
-            <h3>Как можно с вами связаться?</h3>
+            <h3
+              style={{ marginBottom: "40px", marginTop: 0 }}
+              className="title"
+            >
+              Как можно с вами связаться?
+            </h3>
             <FormInput name="phone" />
           </>
         )}
-        {count === 3 && (
+        {count == 3 && (
           <>
-            <h3>Кем вы работаете?</h3>
-            <FormInput name="position" />
-            <FormInput name="workplace" />
+            <h3
+              style={{ marginBottom: "40px", marginTop: 0 }}
+              className="title"
+            >
+              Кем вы работаете?
+            </h3>
+            <div className="input-wrapper">
+              <FormInput name="position" />
+              <FormInput name="workplace" />
+            </div>
           </>
         )}
-        {count === 4 && (
+        {count == 4 && (
           <>
-            <h3>Выберите ваш опыт работы</h3>
+            <h3
+              style={{ marginBottom: "40px", marginTop: 0 }}
+              className="title"
+            >
+              Выберите ваш опыт работы
+            </h3>
             <FormRadio name="workExperience" />
           </>
         )}
-        {count === 5 && (
+        {count == 5 && (
           <>
-            <h3>Выберите ваше направление</h3>
+            <h3
+              style={{ marginBottom: "40px", marginTop: 0 }}
+              className="title"
+            >
+              Выберите ваше направление
+            </h3>
             <FormCheckbox name="direction" />
           </>
         )}
-        {count === 6 && (
+        {count == 6 && (
           <>
-            <h3>В каком формате вы хотели бы участвовать в мероприятиях</h3>
+            <h3
+              style={{ marginBottom: "40px", marginTop: 0 }}
+              className="title"
+            >
+              В каком формате вы хотели бы участвовать в мероприятиях
+            </h3>
             <FormRadio name="participationFormat" />
           </>
         )}
-        {count === 7 && (
+        {count == 7 && (
           <>
-            <h3>Ваше согласие на обработку данных</h3>
-            <label>
-              <input type="checkbox" {...register('consentToDataProcessing')} />
-              Я даю своё согласие на передачу в ООО «ЯНДЕКС» анкеты, содержащей
-              мои персональные данные, и согласен с тем, что они будут храниться
-              в ООО «ЯНДЕКС» в течение 10 лет и будут использованы исключительно
-              для целей приглашения меня к участию в мероприятиях группы
-              компаний «ЯНДЕКС», в соответствии с Федеральным законом «О
-              персональных данных».
-            </label>
-
-            <label>
-              <input type="checkbox" {...register('consentToSendResume')} />Я
-              даю своё согласие на передачу в ООО «ЯНДЕКС» резюме и/или анкеты,
-              содержащих мои персональные данные, и согласен с тем, что они
-              будут храниться в ООО «ЯНДЕКС» в течение 10 лет и будут
-              обрабатываться исключительно для целей предложения мне вакансий
-              группы компаний «ЯНДЕКС», в соответствии с Федеральным законом «О
-              персональных данных».
-            </label>
+            <h3
+              style={{ marginBottom: "28px", marginTop: 0 }}
+              className="title"
+            >
+              Ваше согласие на обработку данных
+            </h3>
+            <div className="register-container">
+              <p
+                className="required"
+                style={{
+                  position: "absolute",
+                  left: "-14px",
+                  top: 0,
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                *
+              </p>
+              <label className="register-checkbox-container">
+                <input
+                  className="register-checkbox"
+                  type="checkbox"
+                  {...register("consentToDataProcessing")}
+                />
+                <p className="register-checkbox-text">
+                  Я даю своё согласие на передачу в ООО «ЯНДЕКС» анкеты,
+                  содержащей мои персональные данные, и согласен с тем, что они
+                  будут храниться в ООО «ЯНДЕКС» в течение 10 лет и будут
+                  использованы исключительно для целей приглашения меня к
+                  участию в мероприятиях группы компаний «ЯНДЕКС», в
+                  соответствии с Федеральным законом «О персональных данных».
+                </p>
+              </label>
+              <label className="register-checkbox-container">
+                <input
+                  className="register-checkbox"
+                  type="checkbox"
+                  {...register("consentToSendResume")}
+                />
+                <p className="register-checkbox-text">
+                  Я даю своё согласие на передачу в ООО «ЯНДЕКС» резюме и/или
+                  анкеты, содержащих мои персональные данные, и согласен с тем,
+                  что они будут храниться в ООО «ЯНДЕКС» в течение 10 лет и
+                  будут обрабатываться исключительно для целей предложения мне
+                  вакансий группы компаний «ЯНДЕКС», в соответствии с
+                  Федеральным законом «О персональных данных».
+                </p>
+              </label>
+            </div>
           </>
         )}
-        {count > 1 && (
-          <button type="button" onClick={decrement}>
+
+        {count < slidesCount && (
+          <button className="continue-btn" type="button" onClick={increment}>
+            {count == 0 ? "Заполнить анкету" : "Далее"}
+          </button>
+        )}
+
+        {count == slidesCount && (
+          <button className="continue-btn" disabled={isSubmitting} type="submit">
+            Отправить
+          </button>
+        )}
+        {count == 0 && (
+          <button
+            className={`back-btn ${count == 0 && "back-btn-first"}`}
+            type="button"
+            onClick={() => navigation("/")}
+          >
             Назад
           </button>
         )}
-        {count < slidesCount && (
-          <button type="button" onClick={increment}>
-            {count === 0 ? "Заполнить анкету" : "Далее"}
-          </button>
-        )}
-        {count === slidesCount && (
-          <button disabled={isSubmitting} type="submit">
-            Отправить
+        {count >= 1 && (
+          <button className="back-btn" type="button" onClick={decrement}>
+            Назад
           </button>
         )}
       </form>

@@ -15,6 +15,7 @@ export const user: TUser = {
   consentToDataProcessing: true,
   consentToSendResume: false,
   email: 'amoga@mail.ru',
+  isLoggedIn: true,
 };
 
 

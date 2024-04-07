@@ -1,0 +1,310 @@
+.anketa-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 864px;
+    height: 575px;
+    border-radius: 24px;
+    margin: auto;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+
+    .progress-container {
+        display: flex;
+        justify-content: center;
+        width: 260px;
+        gap: 8px;
+        box-sizing: border-box;
+        padding: 8;
+        margin: 0;
+        margin-top: 44px;
+        margin-bottom: 44px;
+
+        .progress {
+            box-sizing: border-box;
+            width: 28px;
+            height: 8px;
+            border-radius: 12px;
+            background-color: rgb(226, 226, 226);
+        }
+
+        .active {
+            background-color: rgb(0, 0, 0);
+        }
+
+        .past {
+            background-color: rgb(158, 155, 152);
+        }
+    }
+
+    .title {
+        color: rgb(28, 28, 28);
+        font-family: "Poppins-SemiBold", sans-serif, Arial;
+        font-size: 24px;
+        line-height: 130%;
+        letter-spacing: 0%;
+        margin: 0;
+        padding: 0;
+        margin-top: 115px;
+        margin-bottom: 52px;
+    }
+
+    .text {
+        color: rgb(28, 28, 28);
+        font-family: 'Poppins-Regular', sans-serif, Arial;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0%;
+        height: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 56px;
+        width: 523px;
+    }
+
+    .continue-btn {
+        width: 320px;
+        height: 48px;
+        box-sizing: border-box;
+        padding: 14px 24px 14px 24px;
+        margin: 0;
+        margin-top: 36px;
+        margin-bottom: 15px;
+        background-color: rgb(252, 224, 0);
+        border-radius: 12px;
+        border: none;
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(224, 199, 0);
+        }
+
+        &:disabled {
+            background-color: rgb(201, 199, 198);
+        }
+    }
+
+    .back-btn {
+        width: 320px;
+        height: 48px;
+        box-sizing: border-box;
+        padding: 14px 24px 14px 24px;
+        margin: 0;
+        margin-bottom: 80px;
+        border: none;
+        border-radius: 12px;
+        background-color: inherit;
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        cursor: pointer;
+        color: #000;
+
+        &:hover {
+            background-color: rgb(226, 226, 226);
+        }
+
+        &:disabled {
+            background-color: rgb(226, 226, 226);
+        }
+    }
+
+    .back-btn-first {
+        margin-bottom: 126px;
+    }
+
+    .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px
+    }
+
+    .input-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+
+        .input-text {
+            padding: 0;
+            margin: 0;
+            color: rgb(158, 155, 152);
+            font-family: "Poppins-Regular", sans-serif, Arial;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0%;
+        }
+
+        .input {
+            color: rgb(0, 0, 0);
+            position: relative;
+            box-sizing: border-box;
+            border: 1px solid rgb(158, 155, 152);
+            border-radius: 12px;
+            padding: 10px 12px 10px 12px;
+            width: 320px;
+            font-family: "Poppins-Regular", sans-serif, Arial;
+            font-size: 16px;
+            line-height: 28px;
+            letter-spacing: 0%;
+
+            &:focus {
+                outline: none;
+                border: 1px solid rgb(38, 126, 255);
+            }
+
+            &:disabled {
+                border: 1px solid rgb(226, 226, 226);
+            }
+        }
+
+        .input-error {
+            border: 1px solid rgb(229, 76, 121);
+        }
+    }
+
+    .error {
+        margin: 0;
+        padding: 0;
+        color: red;
+        font-family: "Poppins-Regular", sans-serif, Arial;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0%;
+    }
+
+    .radio-container {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: none;
+
+        .radio {
+            display: flex;
+            gap: 16px;
+            width: 644px;
+            box-sizing: border-box;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            border: none;
+
+            .required {
+                font-family: "Poppins-Regular", sans-serif, Arial;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 24px;
+                letter-spacing: 0%;
+            }
+
+            .option-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 119px;
+                cursor: pointer;
+                box-sizing: border-box;
+                border-radius: 12px;
+                background-color: rgb(255, 255, 255);
+
+                .option-text {
+                    width: 119px;
+                    height: 100%;
+                    border-radius: 12px;
+                    display: flex;
+                    border: 2px solid rgb(226, 226, 226);
+                    align-items: center;
+                    justify-content: center;
+                    color: rgb(28, 28, 28);
+                    font-family: "Poppins-Medium", sans-serif, Arial;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    letter-spacing: 0%;
+                    text-align: center;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .option-text-dif {
+                    width: 152px;
+                    height: 100%;
+                    border-radius: 12px;
+                    display: flex;
+                    border: 2px solid rgb(226, 226, 226);
+                    align-items: center;
+                    justify-content: center;
+                    color: rgb(28, 28, 28);
+                    font-family: "Poppins-Medium", sans-serif, Arial;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    letter-spacing: 0%;
+                    text-align: center;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .option-input {
+                    display: none;
+
+                    &:checked~.option-text {
+                        background-color: rgb(252, 224, 0);
+                    }
+
+                    &:checked~.option-text-dif {
+                        background-color: rgb(252, 224, 0);
+                    }
+                }
+            }
+
+        }
+    }
+
+    .register-container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+
+
+        .register-checkbox-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 0;
+            padding: 10px 12px;
+            gap: 15px;
+            width: 545px;
+            box-sizing: border-box;
+            border: 1px solid rgb(158, 155, 152);
+            border-radius: 12px;
+
+            .register-checkbox-text {
+                color: rgb(28, 28, 28);
+                font-family: 'Poppins-Regular', sans-serif, Arial;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 18px;
+                text-align: left;
+                margin: 0;
+            }
+        }
+    }
+
+
+
+}

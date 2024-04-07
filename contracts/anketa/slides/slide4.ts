@@ -6,7 +6,7 @@ const experienceEnumSchema = z.enum([
   '3_years',
   '5_years',
   'other',
-]);
+], { errorMap: () => ({ message: 'Выберите ваш опыт работы' }) });
 
 export const slide4Schema = z.object({
   workExperience: experienceEnumSchema, // Опыт работы
