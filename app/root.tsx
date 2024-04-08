@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import "./root.scss";
 import { Header } from "./components/Header/Header";
+import meeting from './assets/Illustration_Community.png'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +20,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body suppressHydrationWarning={true}>
         <Header />
-
         <section className="main">
           {children}
           <ScrollRestoration />

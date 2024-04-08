@@ -1,9 +1,10 @@
 .header {
-    width: 100vw;
-    max-width: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
 
 
     .logo {
@@ -12,5 +13,24 @@
         margin-top: 40px;
         margin-left: 122px;
         cursor: pointer;
+    }
+
+    .button {
+        width: 165px;
+        height: 48px;
+        padding: 14px 24px 14px 24px;
+        box-sizing: border-box;
+        border: 2px solid rgb(252, 224, 0);
+        border-radius: 12px;
+        background-color: inherit;
+        margin: 0;
+        margin-top: 40px;
+        margin-right: 122px;
+        cursor: pointer;
+        color: rgb(28, 28, 28);
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: center;
     }
 }
