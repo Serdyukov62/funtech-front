@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "@remix-run/react";
 import logo from "../../assets/Logo.svg";
 import "./index.scss";
-import { useEffect } from "react";
 
 export const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate()
 
   return (
     <header className="header">
@@ -17,7 +17,7 @@ export const Header = () => {
       />
       {
         location.pathname === '/' &&  (
-          <button type="button" className="button">
+          <button onClick={() => navigate("/signin")} type="button" className="button">
             Войти
         </button>
         )

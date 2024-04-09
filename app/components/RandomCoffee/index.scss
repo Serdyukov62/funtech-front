@@ -1,0 +1,55 @@
+.random-coffee {
+    display: flex;
+    padding: 0 122px 0 122px;
+    margin: 0;
+    margin-top: 120px;
+    margin-bottom: 120px;
+    gap: 40px;
+
+        .img{
+            width: 475px;
+        }
+
+    .random-coffee-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        width: 578px;
+
+        .title {
+            color: rgb(0, 0, 0);
+            font-family: "Poppins-SemiBold", sans-serif, Arial;
+            font-size: 28px;
+            line-height: 130%;
+            text-align: left;
+        }
+
+        .subtitle {
+            color: rgb(0, 0, 0);
+            font-family: "Poppins-Regular", sans-serif, Arial;
+            font-size: 20px;
+            line-height: 28px;
+            text-align: left;
+        }
+
+        .button {
+            width: 269px;
+            height: 48px;
+            padding: 14px 24px 14px 24px;
+            border-radius: 12px;
+            background: rgb(252, 224, 0);
+            border: none;
+            cursor: pointer;
+
+            .button-text {
+                color: rgb(28, 28, 28);
+                font-family: "Poppins-Medium", sans-serif, Arial;
+                font-size: 16px;
+                line-height: 20px;
+                text-align: center;
+                margin: 0;
+            }
+        }
+    }
+}

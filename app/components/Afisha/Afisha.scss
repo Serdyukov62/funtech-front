@@ -1,0 +1,29 @@
+.main-container {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    flex: 1;
+    padding: 0 122px 0 122px;
+    margin-top: 54px;
+    margin-bottom: 36px;
+
+    .title {
+        color: rgb(0, 0, 0);
+        font-family: "Poppins-SemiBold", sans-serif, Arial;
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 130%;
+        text-align: left;
+        max-width: 578px;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+     }
+    
+     .image{
+       width: 610px;
+       height: 395px;
+     }
+}

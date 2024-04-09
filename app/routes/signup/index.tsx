@@ -24,9 +24,22 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ errors, defaultValues });
   }
 
-  console.log(data);
+  const res = await fetch('http://funtech.b2k.me:8000/api/v1/users/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  const user = await res.json();
+  if (!user.id) {
+    console.log('ошибка')
+  }
+
+
   // TODO : регистрация + создание куки с токеном
-  return redirect("/anketa");
+  return redirect("/signin");
 };
 
 export default function SignUp() {

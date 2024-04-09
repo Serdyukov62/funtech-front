@@ -8,8 +8,7 @@ import {
   inputSignInFormLabels,
   signInSchema,
 } from "contracts/sign/sign";
-import { signIn } from "contracts/types/user";
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, useEffect } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { badRequest } from "~/utils/request.server";
 import icon from "../../assets/Icons-eye.svg";
@@ -26,12 +25,23 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ errors, defaultValues, formError: null });
   }
 
-  const user = await signIn(data);
+  const res = await fetch('http://funtech.b2k.me:8000/api/v1/auth/token/login/', 
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+  )
+
+  const user = await res.json();
   if (user) {
     const requestUrl = new URL(request.url);
     const redirectTo = `/${requestUrl.searchParams.get("redirectTo") ?? ""}`;
     return redirect(redirectTo);
   }
+
   return badRequest({
     formError: "Логин или пароль введены неверно, попробуйте ещё раз.",
     defaultValues,
@@ -41,6 +51,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function SignIn() {
   const actionData = useActionData<typeof action>();
   const navigation = useNavigate();
+
+  
   const {
     register,
     formState: { isSubmitting, errors },

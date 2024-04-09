@@ -18,7 +18,6 @@ import { useNavigate } from "@remix-run/react";
 export function AnketaForm() {
   const [count, setCount] = useState(0);
   const slide = `Slide${count}`;
-  console.log(count);
 
   const slidesCount = Object.keys(anketaSlideFields).length;
   const navigation = useNavigate();
