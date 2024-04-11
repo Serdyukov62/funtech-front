@@ -5,40 +5,44 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useRouteError
+  useLocation,
+  useRouteError,
 } from "@remix-run/react";
 import { Header } from "./components/Header/Header";
 import { LinksFunction } from "@remix-run/node";
 
-
 export const links: LinksFunction = () => {
-  return [
-      { rel: "stylesheet", href: '/app/styles/css/main.css' }
-  ];
+  return [{ rel: "stylesheet", href: "/app/styles/css/main.css" }];
 };
 
-
 export function ErrorBoundary() {
-    const errors: Error = useRouteError() as Error;
-    return (
-      <>
+  const errors: Error = useRouteError() as Error;
+  return (
+    <>
       {!isRouteErrorResponse(errors) && (
         <div className="error-container">
-        <p className="error-text">{errors?.message}</p>
-        <button 
-          onClick={() => window.history.back()}
-          type="button"
-          className="error-back-btn"
-        >
-          Назад
-        </button>
-      </div>
+          <p className="error-text">{errors?.message}</p>
+          <button
+            onClick={() => window.history.back()}
+            type="button"
+            className="error-back-btn"
+          >
+            Назад
+          </button>
+        </div>
       )}
-      </>
-    );
-  }
+    </>
+  );
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const notMainLocation =
+    location.pathname === "/signin" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/activation" ||
+    location.pathname === "/reset" ||
+    location.pathname === "/anketa";
   return (
     <html lang="en">
       <head>
@@ -47,13 +51,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true} className={` ${
+            notMainLocation
+              ? "not-main"
+              : "main"
+          }`}>
         <Header />
-        <section className="main">
+
           {children}
           <ScrollRestoration />
           <Scripts />
-        </section>
       </body>
     </html>
   );

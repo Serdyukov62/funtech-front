@@ -13,7 +13,7 @@ export default function Events({Events, text}: EventsProps) {
         <h2 className='title'>{text}</h2>
         <div className='gallery-container'>
             {Events.map((event) =>(
-            <Event key={event.id} event={event}/>
+            <Event  past={text === 'Прошедшие события' && true} key={event.id} event={event}/>
             )) 
             }
         </div>

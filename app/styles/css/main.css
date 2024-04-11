@@ -9,5 +9,6 @@
 @import url("../../routes/signup/signup.scss");
 @import url("../../root.scss");
 @import url("../../routes/activation/activation.scss");
+@import url("../../components/Loader/Loader.scss");
 
 /*# sourceMappingURL=main.css.map */

@@ -1,28 +1,67 @@
 import { IEvent } from "contracts/types/event";
 import img from "../../assets/Size=Small.png";
 
+
 interface EventProps {
   event: IEvent;
+  past: boolean;
+
 }
 
+export default function Event({ event, past }: EventProps) {
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const weekday = new Intl.DateTimeFormat("ru-RU", {
+      weekday: "long",
+    }).format(date);
 
-export default function Event({event}: EventProps) {
+    const time = date.toLocaleTimeString("ru-RU", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
+    const monthNames = [
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря",
+    ];
+    const monthIndex = date.getMonth();
+    const month = monthNames[monthIndex];
 
-  function formatDate(date: string) {
-    const d = new Date(date);
-    return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    return `${date.getDate()} ${month} ${time} ${weekday.toLowerCase()}`;
   }
 
   return (
-    <div className="event">
-      <img className="event-img" src={event.image} alt="Превью мероприятия" />
-      <div className="text-container">
-        <h2 className="title">{event.title}</h2>
-        <p className="subtitle">Онлайн</p>
-        <p className="subtitle">20 марта 18:00 среда</p>
-        <p className="link">Идет регистрация</p>
-      </div>
-    </div>
+    
+        <div className="event">
+          <img
+            className="event-img"
+            src={event.host_photo ? event.host_photo : img}
+            alt="Превью мероприятия"
+          />
+          <div className="text-container">
+            <h2 className="title">{event.title}</h2>
+            <p className="subtitle">
+              {event.format === "online" ? "Онлайн" : "Оффлайн"}
+            </p>
+            <p className="subtitle">{formatDate(event.datetime)}</p>
+            {!past && (
+              <p className="link">
+                {event.event_status === "on_time"
+                  ? "Идет регистрация"
+                  : "Регистрация завершена"}
+              </p>
+            )}
+          </div>
+        </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from '@remix-run/react'
 import check from '../../assets/check.svg'
 
-export default function activation() {
+export default function Activation() {
   const navigate = useNavigate()
 
   return (

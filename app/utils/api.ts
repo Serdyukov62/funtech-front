@@ -5,8 +5,6 @@ interface credentials {
     password: string;
 }
 
-
-
  export async function signin (data: credentials)  {
     const response = await fetch(`${BASE_URL}/auth/token/login/`, {
         method: 'POST',
@@ -15,12 +13,14 @@ interface credentials {
         },
         body: JSON.stringify(data),
     });
+    const dataUser = await response.json();
+    const errors: string[] = Object.values(dataUser);
+
+
     if (!response.ok) {
-        if(response.status === 400){
-            throw new Error('Невозможно войти с предоставленными учетными данными.')
-        }
-        throw new Error('Что то пошло не так!');
+        throw new Error(errors.join(', '));
     }
+
     return response.json();
 }
 
@@ -33,11 +33,23 @@ export async function signUp (data: credentials)  {
         body: JSON.stringify(data),
     });
 
+    const dataUser = await response.json()
+    const errors: string[] = Object.values(dataUser);
+
     if (!response.ok) {
-        if(response.status === 400){
-            throw new Error('Невозможно зарегистрироваться с предоставленными учетными данными.')
-        }
-        throw new Error('Что то пошло не так!')
+        throw new Error(errors.join(', '));
     }
     return response.json();
+}
+
+export async function getFutureEvents(){
+    const response = await fetch(`${BASE_URL}/events/?status=upcoming`);
+    const events = await response.json();
+    return events.results;
+}
+
+export async function getPastEvents(){
+    const response = await fetch(`${BASE_URL}/events/?status=past`);
+    const events = await response.json();
+    return events.results;
 }
