@@ -1,5 +1,4 @@
 import icon from "../../assets/Icons-eye.svg";
-import "./index.scss";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
@@ -11,6 +10,7 @@ import {
 } from "contracts/sign/sign";
 import { HTMLInputTypeAttribute } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
+import { signUp } from "~/utils/api";
 
 const resolver = zodResolver(signUpSchema);
 
@@ -24,22 +24,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ errors, defaultValues });
   }
 
-  const res = await fetch('http://funtech.b2k.me:8000/api/v1/users/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-
-  const user = await res.json();
-  if (!user.id) {
-    console.log('ошибка')
+  const user = await signUp(data);
+  
+  if (!user) {
+    return json({
+      errors: {
+        formError: "Данные введены неверно, попробуйте ещё раз.",
+      },
+      defaultValues,
+    });
   }
 
 
   // TODO : регистрация + создание куки с токеном
-  return redirect("/signin");
+  return redirect("/activation");
 };
 
 export default function SignUp() {
@@ -76,7 +74,7 @@ export default function SignUp() {
   );
 
   return (
-    <Form className="form" method="POST">
+    <Form className="signup-form" method="POST">
       <h2 className="title">Регистрация</h2>
       <p className="title-text">Введите email и придумайте пароль</p>
       <div className="form-container">

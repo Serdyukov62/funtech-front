@@ -1,5 +1,4 @@
 import meeting from '../../assets/Illustration_Community.png'
-import './Afisha.scss'
 
 
 export default function Afisha() {

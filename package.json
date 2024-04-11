@@ -4,8 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "build": "npm run sass-prod && remix vite:build",
+    "sass-dev": "sass --watch --update --style=expanded app/styles/sass:app/styles/css",
+    "sass-prod": "sass --no-source-map --style=compressed app/styles/sass:app/styles/css",
+    "dev": "concurrently \"npm run sass-dev\" \"remix vite:dev\"",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"

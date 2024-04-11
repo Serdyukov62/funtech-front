@@ -1,20 +1,21 @@
-
-import './Events.css'
+import { IEvent } from 'contracts/types/event'
 import Event from '../Event/Event'
 
 interface EventsProps {
-    TEvent: Array<any>,
-    text: string,
+  Events: IEvent[],
+  text: string,
 }
 
-export default function Events({text}: EventsProps) {
+export default function Events({Events, text}: EventsProps) {
 
   return (
-    <section className='container'>
+    <section className='gallery'>
         <h2 className='title'>{text}</h2>
         <div className='gallery-container'>
-        <Event/>
-        <Event/><Event/><Event/>
+            {Events.map((event) =>(
+            <Event key={event.id} event={event}/>
+            )) 
+            }
         </div>
     </section>
   )

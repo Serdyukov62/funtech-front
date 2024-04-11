@@ -1,16 +1,24 @@
+import { IEvent } from "contracts/types/event";
 import img from "../../assets/Size=Small.png";
-import "./Event.scss";
+
+interface EventProps {
+  event: IEvent;
+}
 
 
+export default function Event({event}: EventProps) {
 
-type Props = {};
 
-export default function Event({}: Props) {
+  function formatDate(date: string) {
+    const d = new Date(date);
+    return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+  }
+
   return (
     <div className="event">
-      <img className="event-img" src={img} alt="Превью мероприятия" />
+      <img className="event-img" src={event.image} alt="Превью мероприятия" />
       <div className="text-container">
-        <h2 className="title">Union All</h2>
+        <h2 className="title">{event.title}</h2>
         <p className="subtitle">Онлайн</p>
         <p className="subtitle">20 марта 18:00 среда</p>
         <p className="link">Идет регистрация</p>

@@ -1,0 +1,1 @@
+export const BASE_URL = 'http://funtech.b2k.me:8000/api/v1'

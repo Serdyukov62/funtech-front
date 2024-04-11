@@ -1,4 +1,3 @@
-import "./index.scss";
 import "./checkbox.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";

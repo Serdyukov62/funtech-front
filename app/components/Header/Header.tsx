@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "@remix-run/react";
 import logo from "../../assets/Logo.svg";
-import "./index.scss";
 
 export const Header = () => {
   const location = useLocation();

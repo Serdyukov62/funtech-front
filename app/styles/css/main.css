@@ -1,0 +1,13 @@
+@import url("/app/components/Afisha/Afisha.scss");
+@import url("../../components/Anketa/Anketa.scss");
+@import url("../../components/Anketa/checkbox.css");
+@import url("../../components/Event/Event.scss");
+@import url("../../components/Events/Events.scss");
+@import url("../../components/Header/Header.scss");
+@import url("../../components/RandomCoffee/RandomCoffee.scss");
+@import url("../../routes/signin/signin.scss");
+@import url("../../routes/signup/signup.scss");
+@import url("../../root.scss");
+@import url("../../routes/activation/activation.scss");
+
+/*# sourceMappingURL=main.css.map */

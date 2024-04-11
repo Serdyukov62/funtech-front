@@ -1,7 +1,4 @@
-import './index.scss'
 import img from '../../assets/Illustration_Coffee-Break.png'
-
-type Props = {}
 
 export default function RandomCoffee() {
   return (
@@ -11,7 +8,7 @@ export default function RandomCoffee() {
         <div className='random-coffee-container'>
             <h2 className='title'>Random coffee</h2>
             <p className='subtitle'>
-            Подберём собеседника с похожими интересами и целями для профессиональных и дружеских знакомств.  
+            Подберём собеседника с похожими интересами и целями для профессиональных и дружеских знакомств.  
             </p>
             <button className='button' type='button'>
             <p className='button-text'>Принять участие</p>

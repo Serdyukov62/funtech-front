@@ -1,4 +1,4 @@
-.form {
+.error-container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,7 +7,52 @@
     padding: 40px 64px 40px 64px;
     margin-top: 33px;
     box-sizing: border-box;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(244, 244, 244);
+    border-radius: 24px;
+
+    .error-text{
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        color: rgb(0, 0, 0);
+        margin: 0;
+        margin-bottom: 24px;
+        padding: 0;
+    }
+
+    .error-back-btn{
+        width: 320px;
+        height: 48px;
+        box-sizing: border-box;
+        padding: 14px 24px 14px 24px;
+        margin: 0;
+        border: none;
+        border-radius: 12px;
+        background-color: rgb(252, 224, 0);
+        font-family: 'Poppins-Medium', sans-serif, Arial;
+        font-size: 16px;
+        cursor: pointer;
+        color: #000;
+
+        &:hover {
+            background-color: rgb(224, 199, 0);
+        }
+
+        &:disabled {
+            background-color: rgb(226, 226, 226);
+        }
+    }
+}
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 448px;
+    padding: 40px 64px 40px 64px;
+    margin-top: 33px;
+    box-sizing: border-box;
+    background-color: rgb(244, 244, 244);
     border-radius: 24px;
 
     .form-container {
@@ -37,7 +82,7 @@
     }
 
     .mail-btn {
-        background-color: rgb(244, 244, 244);
+        background-color: rgb(255, 255, 255);
         border-radius: 12px;
         padding: 6px 28px 6px 28px;
         color: rgb(0, 0, 0);

@@ -4,10 +4,39 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  useRouteError
 } from "@remix-run/react";
-import "./root.scss";
 import { Header } from "./components/Header/Header";
-import meeting from './assets/Illustration_Community.png'
+import { LinksFunction } from "@remix-run/node";
+
+
+export const links: LinksFunction = () => {
+  return [
+      { rel: "stylesheet", href: '/app/styles/css/main.css' }
+  ];
+};
+
+
+export function ErrorBoundary() {
+    const errors: Error = useRouteError() as Error;
+    return (
+      <>
+      {!isRouteErrorResponse(errors) && (
+        <div className="error-container">
+        <p className="error-text">{errors?.message}</p>
+        <button 
+          onClick={() => window.history.back()}
+          type="button"
+          className="error-back-btn"
+        >
+          Назад
+        </button>
+      </div>
+      )}
+      </>
+    );
+  }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-
 import type { MetaFunction } from "@remix-run/node";
-import { useNavigate } from "@remix-run/react";
+import { useEffect, useState } from "react";
 import Afisha from "~/components/Afisha/Afisha";
 import Events from "~/components/Events/Events";
 import RandomCoffee from "~/components/RandomCoffee/RandomCoffee";
+import { BASE_URL } from "~/constants/api";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,44 +12,30 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-
-
-
 export default function Index() {
-  const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const uid = urlParams.get('uid');
-    const token = urlParams.get('token');
-
-    const data = { uid, token };
-    const activate  = async () => {
-      await fetch('http://funtech.b2k.me:8000/api/v1/users/activation/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(res => res.json())
-      .then(() => navigate('/activate'))
-      .then(res => localStorage.setItem('token', res.token))
-      
+    const getEvents = async () => {
+      const response = await fetch(`${BASE_URL}/events/`);
+      const data = await response.json();
+      setEvents(data.results);
     }
-    if (data.uid && data.token) {
-      activate()
-    }
-    return () => {};
-  },[]);
+    getEvents();
+  },[])
+  if(events.length > 0) {
+    console.log(events)
+  }
+  console.log(events)
+
+  
 
   return (
     <>
     <Afisha/>
-    <Events text="Скоро"/>
+    <Events Events={events} text="Скоро"/>
     <RandomCoffee/>
-    <Events text="Прошедшие события"/>
+    <Events Events={events} text="Прошедшие события"/>
     </>
   );
 }
