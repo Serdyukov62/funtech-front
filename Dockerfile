@@ -9,4 +9,4 @@ COPY . .
 RUN npm run build
 
 FROM debian:12-slim as frontend
-COPY --from=builder /app/build /app/build
+COPY --from=builder /app/build/server /app/build/server
