@@ -1,11 +1,11 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import Afisha from "~/components/Afisha/Afisha";
 import Events from "~/components/Events/Events";
 import Loader from "~/components/Loader/Loader";
 import RandomCoffee from "~/components/RandomCoffee/RandomCoffee";
-import { BASE_URL } from "~/constants/api";
-import { getFutureEvents, getPastEvents } from "~/utils/api";
+import { useStores } from "~/stores/rootStoreContext";
 
 export const meta: MetaFunction = () => {
   return [
@@ -14,40 +14,36 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export default function Index() {
-  const [futureEvents, setFutureEvents] = useState([]);
-  const [pastEvents, setPastEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+export default observer(function Index() {
+  const {
+    events: {
+      getFutureEventsAction,
+      getPastEventsAction,
+      pastEvents,
+      futureEvents,
+    },
+  } = useStores();
 
   useEffect(() => {
-    const fetchFutureEvents = async () => {
-      setIsLoading(true);
-      const events = await getFutureEvents();
-      setFutureEvents(events);
-      setIsLoading(false);
-    };
+    getFutureEventsAction();
+    getPastEventsAction();
+  }, []);
 
-    const fetchPastEvents = async () => {
-      setIsLoading(true);
-      const events = await getPastEvents();
-      setPastEvents(events);
-      setIsLoading(false);
-    };
-
-    fetchFutureEvents();
-    fetchPastEvents();
-  }, [setFutureEvents, setPastEvents]);
 
   return (
     <>
       <Afisha />
-      {isLoading ? <Loader /> : <Events Events={futureEvents} text="Скоро" />}
+      {futureEvents?.case({
+        pending: () => <Loader />,
+        fulfilled: (value) => <Events Events={value} text="Скоро" />,
+      })}
       <RandomCoffee />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Events Events={pastEvents} text="Прошедшие события" />
-      )}
+      {pastEvents?.case({
+        pending: () => <Loader />,
+        fulfilled: (value) => (
+          <Events Events={value} text="Прошедшие события" />
+        ),
+      })}
     </>
   );
-}
+});

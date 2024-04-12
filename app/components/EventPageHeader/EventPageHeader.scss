@@ -1,0 +1,130 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.eventPage {
+    display: flex;
+    gap: 40px;
+
+    .eventPage-title-container {
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+        width: 578px;
+
+        .eventPage-text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .title {
+            margin: 0;
+            padding: 0;
+            color: rgb(28, 28, 28);
+            @include heading_1();
+            text-align: left;
+        }
+
+        .subtitle {
+            margin: 0;
+            padding: 0;
+            color: rgb(28, 28, 28);
+            @include paragraph_medium();
+            text-align: left;
+        }
+
+        .text {
+            margin: 0;
+            padding: 0;
+            @include paragraph_large();
+            text-align: left;
+        }
+
+        .text-gray {
+            margin: 0;
+            padding: 0;
+            color: rgb(158, 155, 152);
+            @include paragraph_large();
+            text-align: left;
+        }
+
+        .btn-container {
+            display: flex;
+            position: relative;
+
+            .btn-primary {
+                width: 268px;
+                height: 48px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 14px 24px 14px 24px;
+                border-radius: 12px;
+                background: $button-main-color;
+                border: none;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $button-hover-color;
+                }
+
+                .btn-text {
+                    margin: 0;
+                    padding: 0;
+                    @include caption_large
+                }
+            }
+
+            .btn-share {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 48px;
+                height: 48px;
+                margin-left: 16px;
+                border-radius: 12px;
+                background-color: rgb(226, 226, 226);
+                border: none;
+                cursor: pointer;
+
+
+                .btn-icon {
+                    width: 24px;
+                    height: 24px;
+                    background: url('../../assets/Vector.svg') center no-repeat;
+                    border: none;
+                }
+            }
+
+            .btn-telegramm {
+                display: none;
+            }
+
+            .btn-telegramm-pressed {
+                position: absolute;
+                cursor: pointer;
+                bottom: -54px;
+                right: 35px;
+                display: flex;
+                padding: 12px;
+                gap: 18px;
+                margin: 0;
+                border-radius: 4px;
+                background-color: inherit;
+                border: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+
+        }
+    }
+
+    .eventPage-img-container{
+        box-sizing: border-box;
+        width: 578px;
+        height: 307px;
+
+        .eventPage-img{
+            width: 100%;
+        }
+    }
+}

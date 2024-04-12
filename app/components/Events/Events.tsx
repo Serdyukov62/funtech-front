@@ -8,6 +8,7 @@ interface EventsProps {
 
 export default function Events({Events, text}: EventsProps) {
 
+
   return (
     <section className='gallery'>
         <h2 className='title'>{text}</h2>

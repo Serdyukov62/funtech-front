@@ -10,6 +10,8 @@ import {
 } from "@remix-run/react";
 import { Header } from "./components/Header/Header";
 import { LinksFunction } from "@remix-run/node";
+import RootStore from "./stores/rootStore";
+import { RootStoreContext } from "./stores/rootStoreContext";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: "/app/styles/css/main.css" }];
@@ -51,21 +53,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body suppressHydrationWarning={true} className={` ${
-            notMainLocation
-              ? "not-main"
-              : "main"
-          }`}>
+      <body
+        suppressHydrationWarning={true}
+        className={` ${notMainLocation ? "not-main" : "main"}`}
+      >
         <Header />
 
-          {children}
-          <ScrollRestoration />
-          <Scripts />
+        {children}
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <RootStoreContext.Provider value={new RootStore()}>
+      <Outlet />
+    </RootStoreContext.Provider>
+  );
 }

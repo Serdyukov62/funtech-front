@@ -10,5 +10,8 @@
 @import url("../../root.scss");
 @import url("../../routes/activation/activation.scss");
 @import url("../../components/Loader/Loader.scss");
+@import url("../../routes/event/eventPage.scss");
+@import url("../../components/EventPageHeader/EventPageHeader.scss");
+@import url("../../components/EventPageMain/EventPageMain.scss");
 
 /*# sourceMappingURL=main.css.map */

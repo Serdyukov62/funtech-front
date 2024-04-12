@@ -9,6 +9,7 @@ interface EventProps {
 }
 
 export default function Event({ event, past }: EventProps) {
+
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     const weekday = new Intl.DateTimeFormat("ru-RU", {
@@ -51,14 +52,14 @@ export default function Event({ event, past }: EventProps) {
           <div className="text-container">
             <h2 className="title">{event.title}</h2>
             <p className="subtitle">
-              {event.format === "online" ? "Онлайн" : "Оффлайн"}
+              {event.format}
             </p>
             <p className="subtitle">{formatDate(event.datetime)}</p>
             {!past && (
               <p className="link">
                 {event.event_status === "on_time"
                   ? "Идет регистрация"
-                  : "Регистрация завершена"}
+                  : "Регистрация завершена" || 'Регистрация отменена'}
               </p>
             )}
           </div>
