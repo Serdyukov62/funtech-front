@@ -14,7 +14,7 @@ export default function Events({Events, text}: EventsProps) {
         <h2 className='title'>{text}</h2>
         <div className='gallery-container'>
             {Events.map((event) =>(
-            <Event  past={text === 'Прошедшие события' && true} key={event.id} event={event}/>
+            <Event onClick={() => window.location.href = `/${event.id}`} past={text === 'Прошедшие события' && true} key={event.id} event={event}/>
             )) 
             }
         </div>

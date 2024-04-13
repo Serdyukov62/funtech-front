@@ -1,21 +1,29 @@
 import { useState } from "react";
 import tgIcon from "../../assets/tgIcon.svg";
-import eventImg from '../../assets/Illustration_Checkbox.png'
+import eventImg from "../../assets/Illustration_Checkbox.png";
+import { IEvent } from "contracts/types/event";
+import { formatDate } from "~/utils/formatDate";
 
-export default function EventPageHeader() {
+interface EventPageHeaderProps {
+  event: IEvent;
+}
+
+export default function EventPageHeader({ event }: EventPageHeaderProps) {
   const [shareButton, setShareButton] = useState(false);
+
+  const formatedDate = formatDate(event.datetime);
 
   return (
     <section className="eventPage">
       <div className="eventPage-title-container">
         <div className="eventPage-text-container">
-          <h2 className="title">Митап HR Tech</h2>
-          <p className="subtitle">Организатор: Яндекс</p>
+          <h2 className="title">{event.title}</h2>
+          <p className="subtitle">Организатор: {event.host_company}</p>
         </div>
         <div className="eventPage-text-container">
-          <p className="text">Москва, улица Льва Толстого, 16</p>
-          <p className="text-gray">29 марта 16:00 (мск) пятница</p>
-          <p className="text">Идёт регистрация</p>
+          <p className="text">{event.location_address}</p>
+          <p className="text-gray">{formatedDate}</p>
+          <p className="text">{event.event_status}</p>
         </div>
         <div className="btn-container">
           <button type="button" className="btn-primary">
@@ -45,6 +53,8 @@ export default function EventPageHeader() {
       <div className="eventPage-img-container">
         <img className="eventPage-img" src={eventImg} alt="Картинка события" />
       </div>
+
+      
     </section>
   );
 }

@@ -1,49 +1,20 @@
 import { IEvent } from "contracts/types/event";
 import img from "../../assets/Size=Small.png";
+import { formatDate } from "~/utils/formatDate";
 
 
 interface EventProps {
   event: IEvent;
   past: boolean;
-
+  onClick: () => void;
 }
 
-export default function Event({ event, past }: EventProps) {
+export default function Event({ event, past, onClick }: EventProps) {
 
-  function formatDate(dateString: string) {
-    const date = new Date(dateString);
-    const weekday = new Intl.DateTimeFormat("ru-RU", {
-      weekday: "long",
-    }).format(date);
-
-    const time = date.toLocaleTimeString("ru-RU", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    const monthNames = [
-      "января",
-      "февраля",
-      "марта",
-      "апреля",
-      "мая",
-      "июня",
-      "июля",
-      "августа",
-      "сентября",
-      "октября",
-      "ноября",
-      "декабря",
-    ];
-    const monthIndex = date.getMonth();
-    const month = monthNames[monthIndex];
-
-    return `${date.getDate()} ${month} ${time} ${weekday.toLowerCase()}`;
-  }
+  const formatedDate = formatDate(event.datetime);
 
   return (
-    
-        <div className="event">
+        <div onClick={onClick} className="event">
           <img
             className="event-img"
             src={event.host_photo ? event.host_photo : img}
@@ -54,7 +25,7 @@ export default function Event({ event, past }: EventProps) {
             <p className="subtitle">
               {event.format}
             </p>
-            <p className="subtitle">{formatDate(event.datetime)}</p>
+            <p className="subtitle">{formatedDate}</p>
             {!past && (
               <p className="link">
                 {event.event_status === "on_time"

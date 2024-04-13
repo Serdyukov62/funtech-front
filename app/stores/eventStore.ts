@@ -7,6 +7,7 @@ class EventsStore {
     events?: IPromiseBasedObservable<IEvent[]>
     futureEvents?: IPromiseBasedObservable<IEvent[]>
     pastEvents?: IPromiseBasedObservable<IEvent[]>
+    event?: IEvent;
 
     constructor() {
         makeAutoObservable(this);
@@ -14,12 +15,14 @@ class EventsStore {
 
     getFutureEventsAction =  () => {
         this.futureEvents = fromPromise(getFutureEvents());
-    console.log(this.futureEvents)
-
     }
 
     getPastEventsAction =  () => {
         this.pastEvents = fromPromise(getPastEvents());
+    }
+
+    setEvent = (event:IEvent) => {
+        this.event = event;
     }
 }
 

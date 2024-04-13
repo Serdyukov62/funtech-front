@@ -25,6 +25,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const user = await signUp(data);
+  console.log(user)
   
   if (!user) {
     return json({

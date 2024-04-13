@@ -1,11 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import {
-  Form,
-  json,
-  useActionData,
-  useNavigate,
-} from "@remix-run/react";
+import { Form, json, useActionData, useNavigate } from "@remix-run/react";
 import {
   ZSignIn,
   inputSignInFormLabels,
@@ -15,7 +10,7 @@ import { HTMLInputTypeAttribute, useEffect } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { badRequest } from "~/utils/request.server";
 import icon from "../../assets/Icons-eye.svg";
-import { signin } from "~/utils/api";
+import { activate, signin } from "~/utils/api";
 
 const resolver = zodResolver(signInSchema);
 
@@ -39,6 +34,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   if (user) {
+    console.log(user)
     const requestUrl = new URL(request.url);
     const redirectTo = `/${requestUrl.searchParams.get("redirectTo") ?? ""}`;
     return redirect(redirectTo);
@@ -55,34 +51,17 @@ export default function SignIn() {
   const navigation = useNavigate();
 
   useEffect(() => {
-
     const urlParams = new URLSearchParams(window.location.search);
-    const uid = urlParams.get('uid');
-    const token = urlParams.get('token');
-  
+    const uid = urlParams.get("uid");
+    const token = urlParams.get("token");
+
     const data = { uid, token };
 
-    const activate  = async () => {
-      await fetch('http://funtech.b2k.me:8000/api/v1/users/activation/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(res => res.json())
-      .then(res => {
-        localStorage.setItem('token', res.token)
-        return res;
-      })
-      .then(() => navigation('/'))
-      .catch()
-    }
     if (data.uid && data.token) {
-      activate()
+      activate(data);
     }
     return () => {};
-  },[]);
+  }, []);
 
   const {
     register,

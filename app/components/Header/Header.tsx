@@ -5,6 +5,8 @@ export const Header = () => {
   const location = useLocation();
   const navigate = useNavigate()
 
+  const paths = location.pathname === "/" ||  location.pathname === "/event";
+
   return (
     <header className="header">
       <img
@@ -15,7 +17,7 @@ export const Header = () => {
         alt="Logo"
       />
       {
-        location.pathname === '/' &&  (
+        paths &&  (
           <button onClick={() => navigate("/signin")} type="button" className="button">
             Войти
         </button>

@@ -1,15 +1,15 @@
 @import '../../styles/mixins.scss';
 
-.eventPage-main-container{
+.eventPage-main-container {
     display: flex;
     flex-direction: column;
 
-    .eventPage-event{
+    .eventPage-event {
         display: flex;
         justify-content: space-between;
         margin-top: 120px;
 
-        .title{
+        .title {
             margin: 0;
             padding: 0;
             color: rgb(28, 28, 28);
@@ -17,7 +17,7 @@
             text-align: left;
         }
 
-        .text{
+        .text {
             width: 784px;
             margin: 0;
             padding: 0;
@@ -27,22 +27,22 @@
         }
     }
 
-    .eventPage-img-container{
+    .eventPage-img-container {
         display: flex;
         gap: 40px;
         margin-top: 60px;
 
-        .eventPage-img{
+        .eventPage-img {
             width: 269px;
         }
     }
 
-    .eventPage-host{
+    .eventPage-host {
         display: flex;
         flex-direction: column;
         margin-top: 120px;
-        
-        .title{
+
+        .title {
             margin: 0;
             padding: 0;
             margin-bottom: 48px;
@@ -50,30 +50,30 @@
             @include heading_2();
             text-align: left
         }
-        
-        .eventPage-host-container{
+
+        .eventPage-host-container {
             display: flex;
             gap: 24px;
             align-items: center;
 
-            .eventPage-host-img{
+            .eventPage-host-img {
                 width: 120px;
                 height: 120px;
 
-                .eventPage-host-photo{
+                .eventPage-host-photo {
                     width: 100%;
                     height: 100%;
                     border-radius: 50%;
                 }
             }
 
-            .eventPage-host-profile{
+            .eventPage-host-profile {
                 display: flex;
                 flex-direction: column;
                 width: 331px;
                 gap: 8px;
 
-                .host-title{
+                .host-title {
                     margin: 0;
                     padding: 0;
                     color: rgb(28, 28, 28);
@@ -81,7 +81,7 @@
                     text-align: left
                 }
 
-                .host-text-gray{
+                .host-text-gray {
                     margin: 0;
                     padding: 0;
                     color: rgb(158, 155, 152);
@@ -89,7 +89,7 @@
                     text-align: left
                 }
 
-                .host-text{
+                .host-text {
                     margin: 0;
                     padding: 0;
                     color: rgb(28, 28, 28);
@@ -97,6 +97,21 @@
                     text-align: left
                 }
             }
+        }
+    }
+
+    .eventPage-time {
+        display: flex;
+        flex-direction: column;
+    
+        .title {
+            margin: 0;
+            padding: 0;
+            margin-bottom: 48px;
+            margin-top: 120px;
+            color: rgb(28, 28, 28);
+            @include heading_2();
+            text-align: left
         }
     }
 }

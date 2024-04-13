@@ -1,0 +1,61 @@
+@import '../../styles/mixins.scss';
+
+.eventPage-place-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 120px;
+
+    .title {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 36px;
+        color: rgb(28, 28, 28);
+        @include heading_1();
+        text-align: center;
+    }
+
+    .subtitle {
+        margin: 0;
+        padding: 0;
+        color: rgb(28, 28, 28);
+        @include paragraph_large();
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .text {
+        margin: 0;
+        padding: 0;
+        color: rgb(158, 155, 152);
+        @include paragraph_large();
+        text-align: center;
+    }
+
+    .btn {
+        width: 268px;
+        height: 48px;
+        padding: 14px 24px 14px 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        margin-top: 48px;
+        border-radius: 12px;
+        background: $button-main-color;
+        border: none;
+        cursor: pointer;
+
+        &:hover{
+            background: $button-hover-color;
+        }
+
+        .btn-text {
+            margin: 0;
+            padding: 0;
+            color: rgb(28, 28, 28);
+            @include caption_large();
+        }
+    }
+}
