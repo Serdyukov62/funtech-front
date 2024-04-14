@@ -1,13 +1,14 @@
 import { makeAutoObservable } from 'mobx';
-import {IEvent} from '../../contracts/types/event'
+import {IEvent, Subevent} from '../../contracts/types/event'
 import { IPromiseBasedObservable, fromPromise } from 'mobx-utils';
-import { getFutureEvents, getPastEvents } from '~/utils/api';
+import { getEvent, getFutureEvents, getPastEvents } from '~/utils/api';
 
 class EventsStore {
     events?: IPromiseBasedObservable<IEvent[]>
     futureEvents?: IPromiseBasedObservable<IEvent[]>
     pastEvents?: IPromiseBasedObservable<IEvent[]>
-    event?: IEvent;
+    event?: IPromiseBasedObservable<IEvent>;
+    subevent?: IPromiseBasedObservable<Subevent>
 
     constructor() {
         makeAutoObservable(this);
@@ -21,8 +22,12 @@ class EventsStore {
         this.pastEvents = fromPromise(getPastEvents());
     }
 
-    setEvent = (event:IEvent) => {
-        this.event = event;
+    setEvent = (id: string | undefined) => {
+        this.event = fromPromise(getEvent(id));
+    }
+
+    setSubEvent = (id: string | undefined) => {
+        this.subevent = fromPromise(getEvent(id));
     }
 }
 

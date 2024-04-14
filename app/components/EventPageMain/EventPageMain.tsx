@@ -10,6 +10,7 @@ interface EventPageMainProps {
 }
 
 export default function EventPageMain({ event }: EventPageMainProps) {
+  console.log(event.subevents)
   return (
     <section className="eventPage-main-container">
       <div className="eventPage-event">
@@ -34,15 +35,11 @@ export default function EventPageMain({ event }: EventPageMainProps) {
         <div className="eventPage-img">
           <img src={img} alt="Фотографии с ивента" />
         </div>
-        <div className="eventPage-img">
-          <img src={img} alt="Фотографии с ивента" />
-        </div>
-        <div className="eventPage-img">
-          <img src={img} alt="Фотографии с ивента" />
-        </div>
-        <div className="eventPage-img">
-          <img src={img} alt="Фотографии с ивента" />
-        </div>
+        {event.photos.map((photo) => (
+          <div key={event.id} className="eventPage-img">
+            <img src={photo} alt="Фотографии с ивента" />
+          </div>
+        ))}
       </div>
 
       <div className="eventPage-host">
@@ -51,15 +48,15 @@ export default function EventPageMain({ event }: EventPageMainProps) {
           <div className="eventPage-host-img">
             <img
               className="eventPage-host-photo"
-              src={photo}
+              src={event.host_photo}
               alt="Фото ведущего"
             />
           </div>
           <div className="eventPage-host-profile">
-            <h3 className="host-title">Константин Константинов</h3>
-            <p className="host-text-gray">Яндекс</p>
+            <h3 className="host-title">{event.host_full_name}</h3>
+            <p className="host-text-gray">{event.host_company}</p>
             <p className="host-text">
-              Старший менеджер продукта блока «Интранет» HR Tech
+              {event.host_position}
             </p>
           </div>
         </div>
@@ -67,13 +64,13 @@ export default function EventPageMain({ event }: EventPageMainProps) {
 
       <div className="eventPage-time">
         <h3 className="title">Программа</h3>
-        <EventPageProgram/>
-        <EventPageProgram/>
-        <EventPageProgram/>
+        {event.subevents.map((subevent) => (
+          <EventPageProgram key={subevent.id} event={subevent} />
+        ))}
       </div>
 
-      <EventPagePlace/>
-      <EventPagePlaceProfile/>
+      <EventPagePlace />
+      <EventPagePlaceProfile />
     </section>
   );
 }

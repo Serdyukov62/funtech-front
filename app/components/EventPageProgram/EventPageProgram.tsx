@@ -1,10 +1,21 @@
+import { Subevent } from "contracts/types/event";
 import photo from "../../assets/photo-host.png";
 
-export default function EventPageProgram() {
+interface EventPageProgramProps {
+  event: Subevent;
+}
+
+export default function EventPageProgram({event}: EventPageProgramProps) {
+
+  function formateTime(time: string) {
+    const [hours, minutes] = time.split(':');
+    return `${hours}:${minutes}`
+  }
+
   return (
     <div className="eventPage-time-row">
-      <h4 className="title-time">16:00</h4>
-      <p className="subtitle">Экосистема интранета</p>
+      <h4 className="title-time">{formateTime(event.time)}</h4>
+      <p className="subtitle">{event.title}</p>
       <div className="eventPage-time-profile">
         <div className="eventPage-time-profile-img">
           <img

@@ -22,6 +22,7 @@ export interface IEvent {
     host_company: string
     host_position: string
     event_link: string
+    photos: string[]
   }
   
   export interface Subevent {
