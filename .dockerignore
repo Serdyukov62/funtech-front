@@ -1,0 +1,12 @@
+.git/
+node_modules/
+Dockerfile
+README.md
+LICENSE
+dist/
+build/
+.idea/
+.vscode
+.DS_Store
+.github
+archive/
