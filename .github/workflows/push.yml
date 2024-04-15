@@ -23,3 +23,15 @@ jobs:
           context: ./
           push: true
           tags: ${{ vars.DOCKER_USERNAME }}/funtech-front:latest
+
+  dispatch:
+    needs: [build_and_push_to_docker_hub]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push to repo
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: "StAndUP-ru/funtech"
+          event-type: update_remote
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "module": "funtech-front", "branch": "develop"}'
