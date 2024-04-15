@@ -8,5 +8,5 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM debian:12-slim as frontend
-COPY --from=builder /app/build/server /app/build/server
+RUN  sed -i 's/\r$//' ./entrypoint.sh && chmod +x ./entrypoint.sh
+ENTRYPOINT  ["./entrypoint.sh"]
