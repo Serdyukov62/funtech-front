@@ -1,5 +1,4 @@
 import img from "../../assets/photo.png";
-import photo from "../../assets/photo-host.png";
 import EventPageProgram from "../EventPageProgram/EventPageProgram";
 import EventPagePlace from "../EventPagePlace/EventPagePlace";
 import EventPagePlaceProfile from "../EventPagePlaceProfile/EventPagePlaceProfile";
@@ -10,7 +9,6 @@ interface EventPageMainProps {
 }
 
 export default function EventPageMain({ event }: EventPageMainProps) {
-  console.log(event.subevents)
   return (
     <section className="eventPage-main-container">
       <div className="eventPage-event">

@@ -1,36 +1,27 @@
+import { IUserInfo } from "contracts/types/user";
 import { makeAutoObservable } from "mobx";
+import { IPromiseBasedObservable, fromPromise } from "mobx-utils";
+import { getUser } from "~/utils/api";
 
 interface UserInfo{
-    id: number,
-    name: string,
-    email: string,
-    isLoggedIn: boolean,
+    user: IUserInfo
 }
 
 
 class UserStore {
-    userInfo = {
-        id: 0,
-        name: '',
-        isLoggedIn: false,
-    }
+    userInfo?: IPromiseBasedObservable<UserInfo>;
+    isLoggedIn: boolean = false;
 
     constructor(){
         makeAutoObservable(this);
     }
 
-    setUserInfo(userInfo: UserInfo){
-        this.userInfo = userInfo;
+    getUserInfo = (token: string) => {
+        this.userInfo = fromPromise(getUser(token));
     }
 
-    getUserInfo = async () => {
-        const res = await fetch('http://funtech.b2k.me:8000/api/v1/users/me/', {
-            headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            }
-        });
-        const data = await res.json();
-        this.setUserInfo(data);
+    loggedIn = () => {
+        this.isLoggedIn = true;
     }
     
 }

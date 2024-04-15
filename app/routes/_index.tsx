@@ -1,4 +1,5 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import Afisha from "~/components/Afisha/Afisha";
@@ -6,15 +7,30 @@ import Events from "~/components/Events/Events";
 import Loader from "~/components/Loader/Loader";
 import RandomCoffee from "~/components/RandomCoffee/RandomCoffee";
 import { useStores } from "~/stores/rootStoreContext";
+import { getUserSession } from "~/utils/session.server";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Funtech" },
-    { name: "description", content: "Welcome to Remix!" },
+    { name: "description", content: "Трекер мероприятий Funtech " },
   ];
 };
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  return getUserSession(request);
+};
+
 export default observer(function Index() {
+  const {
+    user: {getUserInfo, loggedIn},
+  } = useStores();
+  const user = useLoaderData<typeof loader>();
+
+  useEffect(() => {
+    getUserInfo(user.data.token);
+    loggedIn();
+  }, []);
+
   const {
     events: {
       getFutureEventsAction,
@@ -28,7 +44,6 @@ export default observer(function Index() {
     getFutureEventsAction();
     getPastEventsAction();
   }, []);
-
 
   return (
     <>

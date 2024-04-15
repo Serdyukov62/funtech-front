@@ -17,3 +17,22 @@
 @import url('../../components/EventPagePlace/EventPagePlace.scss');
 @import url('../../components/EventPagePlaceProfile/EventPagePlaceProfile.scss');
 
+@import "../variables.scss";
+@import "../mixins.scss";
+
+.main {
+   background-color: rgb(255, 255, 255);
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+}
+
+.not-main{
+   background-color: rgb(244, 244, 244);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   height: 100vh;
+}
+

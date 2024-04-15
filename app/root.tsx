@@ -8,13 +8,16 @@ import {
   useLocation,
   useRouteError,
 } from "@remix-run/react";
-import { Header } from "./components/Header/Header";
 import { LinksFunction } from "@remix-run/node";
 import RootStore from "./stores/rootStore";
 import { RootStoreContext } from "./stores/rootStoreContext";
+import styles from './styles/css/main.css?url'
+import Header from "./components/Header/Header";
+
+
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: "/app/styles/css/main.css" }];
+  return [{ rel: "stylesheet", href: styles}];
 };
 
 export function ErrorBoundary() {
@@ -45,6 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     location.pathname === "/activation" ||
     location.pathname === "/reset" ||
     location.pathname === "/anketa";
+
   return (
     <html lang="en">
       <head>
@@ -58,7 +62,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         className={` ${notMainLocation ? "not-main" : "main"}`}
       >
         <Header />
-
         {children}
         <ScrollRestoration />
         <Scripts />

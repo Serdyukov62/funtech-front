@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { Form, json, useActionData, useNavigate } from "@remix-run/react";
+import { ActionFunctionArgs} from "@remix-run/node";
+import { Form, json, useActionData,useNavigate } from "@remix-run/react";
 import {
   ZSignIn,
   inputSignInFormLabels,
@@ -10,7 +10,9 @@ import { HTMLInputTypeAttribute, useEffect } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { badRequest } from "~/utils/request.server";
 import icon from "../../assets/Icons-eye.svg";
-import { activate, signin } from "~/utils/api";
+import { activate } from "~/utils/api";
+import { createUserSession} from "~/utils/session.server";
+import AuthService from "~/utils/api.server";
 
 const resolver = zodResolver(signInSchema);
 
@@ -24,7 +26,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ errors, defaultValues, formError: null });
   }
 
-  const user = await signin(data);
+  const api = new AuthService()
+
+  const user = await api.signIn(data);
 
   if (!user) {
     return badRequest({
@@ -33,24 +37,17 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     });
   }
 
-  if (user) {
-    console.log(user)
-    const requestUrl = new URL(request.url);
-    const redirectTo = `/${requestUrl.searchParams.get("redirectTo") ?? ""}`;
-    return redirect(redirectTo);
-  }
-
-  return badRequest({
-    formError: "Логин или пароль введены неверно, попробуйте ещё раз.",
-    defaultValues,
-  });
+  return createUserSession(user.auth_token, "/");
 };
+
+
+
 
 export default function SignIn() {
   const actionData = useActionData<typeof action>();
   const navigation = useNavigate();
 
-  useEffect(() => {
+  function activation (){
     const urlParams = new URLSearchParams(window.location.search);
     const uid = urlParams.get("uid");
     const token = urlParams.get("token");
@@ -60,7 +57,11 @@ export default function SignIn() {
     if (data.uid && data.token) {
       activate(data);
     }
-    return () => {};
+  }
+
+
+  useEffect(() => {
+    activation()
   }, []);
 
   const {
