@@ -1,0 +1,33 @@
+<svg width="48.000000" height="48.000000" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip741_4541">
+			<rect id="Calendar" width="48.000000" height="48.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+		<linearGradient id="paint_linear_741_4527_0" x1="47.269596" y1="13.825882" x2="10.434814" y2="13.825882" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#FCE000"/>
+			<stop offset="1.000000" stop-color="#EF534F"/>
+		</linearGradient>
+		<linearGradient id="paint_linear_741_4536_0" x1="35.219269" y1="27.390539" x2="30.260742" y2="27.390539" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#FCE000"/>
+			<stop offset="1.000000" stop-color="#EF534F"/>
+		</linearGradient>
+	</defs>
+	<g clip-path="url(#clip741_4541)">
+		<circle id="background" cx="24.000000" cy="24.000000" r="24.000000" fill="#FCE000" fill-opacity="1.000000"/>
+		<path id="Vector" d="M10.43 17.21L23.28 14.46C23.75 14.36 24.24 14.36 24.71 14.46L37.56 17.21L37.56 32.52C37.56 33.86 37.03 35.14 36.08 36.09C35.14 37.03 33.86 37.56 32.52 37.56L15.47 37.56C14.13 37.56 12.85 37.03 11.91 36.09C10.96 35.14 10.43 33.86 10.43 32.52L10.43 17.21Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+		<path id="Vector" d="M11.4 16.24L23.23 13.51C23.73 13.4 24.26 13.4 24.76 13.51L36.59 16.24L36.59 32.23C36.59 33.39 36.13 34.5 35.31 35.31C34.5 36.13 33.39 36.59 32.23 36.59L15.76 36.59C14.6 36.59 13.49 36.13 12.68 35.31C11.86 34.5 11.4 33.39 11.4 32.23L11.4 16.24Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="nonzero"/>
+		<path id="Vector" d="M15.47 10.43C14.13 10.43 12.85 10.96 11.91 11.91C10.96 12.85 10.43 14.13 10.43 15.47L10.43 17.21L37.56 17.21L37.56 15.47C37.56 14.13 37.03 12.85 36.08 11.91C35.14 10.96 33.86 10.43 32.52 10.43L15.47 10.43Z" fill="url(#paint_linear_741_4527_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
+		<rect id="vector" x="14.608643" y="18.782227" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="22.434814" y="18.782227" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="30.260742" y="18.782227" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="14.608643" y="25.564453" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="22.434814" y="25.564453" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="30.260742" y="25.564453" rx="0.521739" width="3.652174" height="3.652174" fill="url(#paint_linear_741_4536_0)" fill-opacity="1.000000"/>
+		<rect id="vector" x="14.608643" y="32.347656" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="22.434814" y="32.347656" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+		<rect id="vector" x="30.260742" y="32.347656" rx="0.521739" width="3.652174" height="3.652174" fill="#CFE2FF" fill-opacity="1.000000"/>
+	</g>
+</svg>

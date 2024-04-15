@@ -7,5 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 installGlobals();
 
 export default defineConfig({
-  plugins: [remix(), tsconfigPaths(),sass()],
+  plugins: [remix({
+  }), tsconfigPaths(),sass()],
+  
 });

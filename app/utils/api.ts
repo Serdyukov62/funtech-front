@@ -20,6 +20,7 @@ interface activationCredentials{
     });
     const dataUser = await response.json();
     const errors: string[] = Object.values(dataUser);
+    console.log(dataUser)
 
 
     if (!response.ok) {
@@ -47,6 +48,17 @@ export async function signUp (data: credentials)  {
     return dataUser;
 }
 
+export async function getUser(tokenValue: string) {
+
+    const response = await fetch(`${BASE_URL}/users/me/`, {
+        headers: {
+            'Authorization': `Token ${tokenValue}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
 export async function getFutureEvents(){
     const response = await fetch(`${BASE_URL}/events/?status=upcoming`);
     const events = await response.json();
@@ -60,7 +72,7 @@ export async function getPastEvents(){
 }
 
 export async function activate(data:activationCredentials) {
-    const response = await fetch('http://funtech.b2k.me:8000/api/v1/users/activation/', {
+    const response = await fetch(`${BASE_URL}/users/activation/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +89,7 @@ export async function activate(data:activationCredentials) {
   }
 
   export async function getEvent (id:string | undefined) {
-    const res = await fetch(`http://funtech.b2k.me:8000/api/v1/events/${id}/`)
+    const res = await fetch(`${BASE_URL}/events/${id}/`)
     const data = await res.json()
     return data;
   }
