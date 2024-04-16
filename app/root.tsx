@@ -1,3 +1,5 @@
+import styles from "./styles/css/main.css?url";
+
 import {
   Links,
   Meta,
@@ -5,19 +7,20 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLoaderData,
   useLocation,
+  useNavigate,
   useRouteError,
 } from "@remix-run/react";
-import { LinksFunction } from "@remix-run/node";
-import RootStore from "./stores/rootStore";
-import { RootStoreContext } from "./stores/rootStoreContext";
-import styles from './styles/css/main.css?url'
+import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { RootStoreProvider, useStores } from "./stores/rootStoreContext";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { getUserSession } from "./utils/session.server";
 import Header from "./components/Header/Header";
 
-
-
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: styles}];
+  return [{ rel: "stylesheet", href: styles }];
 };
 
 export function ErrorBoundary() {
@@ -58,11 +61,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body
-        suppressHydrationWarning={true}
         className={` ${notMainLocation ? "not-main" : "main"}`}
+        suppressHydrationWarning={true}
       >
-        <Header />
-        {children}
+        <RootStoreProvider> {children}</RootStoreProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -70,10 +72,41 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  return getUserSession(request);
+};
+
+export default observer(function App() {
+  const {
+    userStore: { getUserInfo },
+  } = useStores();
+
+  const navigation = useNavigate();
+
+  const userToken = useLoaderData<typeof loader>();
+
+  const {
+    eventStore: { getFutureEventsAction, getPastEventsAction },
+  } = useStores();
+
+  useEffect(() => {
+    getFutureEventsAction();
+    getPastEventsAction();
+  }, []);
+
+  useEffect(() => {
+    if (userToken.data.token) {
+      getUserInfo(userToken.data.token)
+      .then((user) => {
+        !user?.profile_full && navigation('/anketa');
+      })
+    }
+  }, []);
+
   return (
-    <RootStoreContext.Provider value={new RootStore()}>
+    <>
+      <Header/>
       <Outlet />
-    </RootStoreContext.Provider>
+    </>
   );
-}
+});

@@ -4,7 +4,7 @@ import { z } from 'zod';
 const participationFormatEnumSchema = z.enum(["online", "offline"]);
 
 export const slide6Schema = z.object({
-  participationFormat: participationFormatEnumSchema, // Формат участия
+  preferred_format: participationFormatEnumSchema, // Формат участия
 });
 
 export type ZSlide6 = z.infer<typeof slide6Schema>;

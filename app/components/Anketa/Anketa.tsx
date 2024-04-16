@@ -13,8 +13,14 @@ import { checkOptions, radioOptions } from "contracts/anketa/options";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "@remix-run/react";
+import { postAnketa } from "~/utils/api";
 
-export function AnketaForm() {
+interface Props {
+  id: number | undefined;
+  token: string | null;
+}
+
+export function AnketaForm({ id, token }: Props) {
   const [count, setCount] = useState(0);
   const slide = `Slide${count}`;
 
@@ -31,7 +37,12 @@ export function AnketaForm() {
     mode: "onBlur",
   });
 
-  const onSubmit = (data: ZAnketaForm) => {};
+  const onSubmit = (data: ZAnketaForm) => {
+    console.log(data);
+    if (id !== null && token !== null) {
+      postAnketa(data, id!, token);
+    }
+  };
 
   const increment = async () => {
     if (isAnketaSlideKey(slide)) {
@@ -129,29 +140,20 @@ export function AnketaForm() {
               <span className="checkmark"></span>
             </label>
           ))}
-
-          {errors[name] && (
-            <p
-              style={{ marginTop: "16px" }}
-              className="error"
-            >{`${errors[name]?.message}`}</p>
-          )}
         </div>
+        {errors[name] && (
+          <p
+            style={{ marginTop: "16px" }}
+            className="error"
+          >{`${errors[name]?.message}`}</p>
+        )}
       </fieldset>
     );
   };
 
-  const ConfirmCheckboxForm = () => {
-
-  }
-
   return (
     <div>
-      <form
-        className="anketa-container"
-        onSubmit={handleSubmit(onSubmit)}
-        // onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
-      >
+      <form className="anketa-container" onSubmit={handleSubmit(onSubmit)}>
         {count >= 1 && (
           <div className="progress-container">
             {Array.from({ length: slidesCount }, (_, i) => (
@@ -182,8 +184,8 @@ export function AnketaForm() {
               Как вас зовут?
             </h3>
             <div className="input-wrapper">
-              <FormInput name="firstName" />
-              <FormInput name="lastName" />
+              <FormInput name="first_name" />
+              <FormInput name="last_name" />
             </div>
           </>
         )}
@@ -207,8 +209,8 @@ export function AnketaForm() {
               Кем вы работаете?
             </h3>
             <div className="input-wrapper">
-              <FormInput name="position" />
-              <FormInput name="workplace" />
+              <FormInput name="occupation" />
+              <FormInput name="employer" />
             </div>
           </>
         )}
@@ -220,7 +222,7 @@ export function AnketaForm() {
             >
               Выберите ваш опыт работы
             </h3>
-            <FormRadio name="workExperience" />
+            <FormRadio name="experience" />
           </>
         )}
         {count == 5 && (
@@ -231,7 +233,7 @@ export function AnketaForm() {
             >
               Выберите ваше направление
             </h3>
-            <FormCheckbox name="direction" />
+            <FormCheckbox name="specialization" />
           </>
         )}
         {count == 6 && (
@@ -242,7 +244,7 @@ export function AnketaForm() {
             >
               В каком формате вы хотели бы участвовать в мероприятиях
             </h3>
-            <FormRadio name="participationFormat" />
+            <FormRadio name="preferred_format" />
           </>
         )}
         {count == 7 && (
@@ -270,7 +272,7 @@ export function AnketaForm() {
                 <input
                   className="register-checkbox"
                   type="checkbox"
-                  {...register("consentToDataProcessing")}
+                  {...register("consent_personal_data_processing")}
                 />
                 <p className="register-checkbox-text">
                   Я даю своё согласие на передачу в ООО «ЯНДЕКС» анкеты,
@@ -285,7 +287,7 @@ export function AnketaForm() {
                 <input
                   className="register-checkbox"
                   type="checkbox"
-                  {...register("consentToSendResume")}
+                  {...register("consent_vacancy_data_processing")}
                 />
                 <p className="register-checkbox-text">
                   Я даю своё согласие на передачу в ООО «ЯНДЕКС» резюме и/или
@@ -307,7 +309,11 @@ export function AnketaForm() {
         )}
 
         {count == slidesCount && (
-          <button className="continue-btn" disabled={isSubmitting} type="submit">
+          <button
+            className="continue-btn"
+            disabled={isSubmitting}
+            type="submit"
+          >
             Отправить
           </button>
         )}

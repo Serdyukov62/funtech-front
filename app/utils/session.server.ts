@@ -18,10 +18,10 @@ const storage = createCookieSessionStorage({
   },
 });
 
-export async function createUserSession(token: string, redirectPath: string = '/') {
+export async function createUserSession(token: string, redirectPath: string) {
   const session = await storage.getSession();
   session.set("token", token); // Сохраняем токен в куки
-  
+
   return redirect(redirectPath, {
     headers: {
       "Set-Cookie": await storage.commitSession(session),
@@ -35,10 +35,9 @@ export async function getUserSession(request: Request) {
 
 export async function destroyUserSession(request: Request) {
   const session = await getUserSession(request);
-  return redirect('/signin', {
+  return redirect("/signin", {
     headers: {
       "Set-Cookie": await storage.destroySession(session),
     },
   });
 }
-

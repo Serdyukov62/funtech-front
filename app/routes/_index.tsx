@@ -1,13 +1,11 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 import Afisha from "~/components/Afisha/Afisha";
 import Events from "~/components/Events/Events";
 import Loader from "~/components/Loader/Loader";
 import RandomCoffee from "~/components/RandomCoffee/RandomCoffee";
 import { useStores } from "~/stores/rootStoreContext";
-import { getUserSession } from "~/utils/session.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,34 +14,13 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return getUserSession(request);
-};
-
 export default observer(function Index() {
   const {
-    user: {getUserInfo, loggedIn},
-  } = useStores();
-  const user = useLoaderData<typeof loader>();
-
-  useEffect(() => {
-    getUserInfo(user.data.token);
-    loggedIn();
-  }, []);
-
-  const {
-    events: {
-      getFutureEventsAction,
-      getPastEventsAction,
+    eventStore: {
       pastEvents,
       futureEvents,
     },
   } = useStores();
-
-  useEffect(() => {
-    getFutureEventsAction();
-    getPastEventsAction();
-  }, []);
 
   return (
     <>

@@ -48,5 +48,6 @@ export interface IUserInfo {
   consent_vacancy_data_processing: boolean
   consent_random_coffee: boolean
   profile_full: boolean
-  my_events: IEvent[]
+  my_events: IEvent[],
+  isLoggedIn: boolean,
 }

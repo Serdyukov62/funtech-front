@@ -16,6 +16,7 @@
 @import url('../../components/EventPageProgram/EventPageProgram.scss');
 @import url('../../components/EventPagePlace/EventPagePlace.scss');
 @import url('../../components/EventPagePlaceProfile/EventPagePlaceProfile.scss');
+@import url('../../components/Profile/Profile.scss');
 
 @import "../variables.scss";
 @import "../mixins.scss";
@@ -26,6 +27,8 @@
    justify-content: center;
    flex-direction: column;
    align-items: center;
+   margin: 0;
+   
 }
 
 .not-main{
@@ -34,5 +37,7 @@
    flex-direction: column;
    align-items: center;
    height: 100vh;
+   margin: 0;
+
 }
 

@@ -6,18 +6,19 @@ import EventPageMain from "~/components/EventPageMain/EventPageMain";
 import Loader from "~/components/Loader/Loader";
 import { useStores } from "~/stores/rootStoreContext";
 
-export default observer(
-  function Index() {
-    const {events: {event, setEvent}} = useStores();
-  
-    const { id } = useParams();
-  
-  
-    useEffect(() => {
-      setEvent(id)
-    }, []);
-  
-    return (
+export default observer(function Index() {
+  const {
+    eventStore: { event, setEvent },
+  } = useStores();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    setEvent(id);
+  }, []);
+
+  return (
+    <>
       <section className="event-in">
         {event?.case({
           pending: () => <Loader />,
@@ -28,6 +29,6 @@ export default observer(
           fulfilled: (value) => <EventPageMain event={value} />,
         })}
       </section>
-    );
-  }
-) 
+    </>
+  );
+});

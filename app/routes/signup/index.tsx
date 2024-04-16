@@ -10,6 +10,7 @@ import {
 } from "contracts/sign/sign";
 import { HTMLInputTypeAttribute } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
+import Header from "~/components/Header/Header";
 import { signUp } from "~/utils/api";
 
 const resolver = zodResolver(signUpSchema);
@@ -25,7 +26,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const user = await signUp(data);
-  
+
   if (!user) {
     return json({
       errors: {
@@ -34,7 +35,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       defaultValues,
     });
   }
-
 
   // TODO : регистрация + создание куки с токеном
   return redirect("/activation");
@@ -74,20 +74,27 @@ export default function SignUp() {
   );
 
   return (
-    <Form className="signup-form" method="POST">
-      <h2 className="title">Регистрация</h2>
-      <p className="title-text">Введите email и придумайте пароль</p>
-      <div className="form-container">
-        <FormInput name="email" type="email" />
-        <FormInput name="password" type="password" />
-        <FormInput name="confirmPassword" type="password" />
-      </div>
-      <button className="submit-btn" type="submit" disabled={isSubmitting}>
-        Готово
-      </button>
-      <button className="back-btn" type="button" onClick={() => navigation(-1)}>
-        Назад
-      </button>
-    </Form>
+    <>
+      <Header />
+      <Form className="signup-form" method="POST">
+        <h2 className="title">Регистрация</h2>
+        <p className="title-text">Введите email и придумайте пароль</p>
+        <div className="form-container">
+          <FormInput name="email" type="email" />
+          <FormInput name="password" type="password" />
+          <FormInput name="confirmPassword" type="password" />
+        </div>
+        <button className="submit-btn" type="submit" disabled={isSubmitting}>
+          Готово
+        </button>
+        <button
+          className="back-btn"
+          type="button"
+          onClick={() => navigation(-1)}
+        >
+          Назад
+        </button>
+      </Form>
+    </>
   );
 }

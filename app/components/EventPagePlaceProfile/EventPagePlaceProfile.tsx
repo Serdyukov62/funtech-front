@@ -7,7 +7,7 @@ export default function EventPagePlaceProfile() {
         <h4 className="subtitle">Москва, улица Льва Толстого, 16</h4>
         <p className="text">29 марта 16:00 (МСК) пятница</p>
         <button type="button" className="btn">
-            <p className="btn-text">Хочу учавствовать</p>
+            <p className="btn-text">Хочу участвовать</p>
         </button>
     </div>
   )

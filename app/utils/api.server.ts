@@ -28,8 +28,11 @@ class AuthService {
       body: JSON.stringify(data),
     });
 
+    const dataResponse = await response.json();
+    const errors = Object.values(dataResponse);
+
     if (!response.ok) {
-      throw new Error("Ошибка в запросе к стороннему сервису");
+      throw new Error(errors.join("\n"));
     }
 
     return response.json() as Promise<T>;
@@ -44,7 +47,6 @@ class AuthService {
   }
 
   public async signUp(data: Credentials): Promise<AuthServiceResponse> {
-    console.log(data);
     return this.request<AuthServiceResponse>("users", data);
   }
 }

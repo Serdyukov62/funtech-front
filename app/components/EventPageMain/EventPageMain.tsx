@@ -31,11 +31,11 @@ export default function EventPageMain({ event }: EventPageMainProps) {
       </div>
       <div className="eventPage-img-container">
         <div className="eventPage-img">
-          <img src={img} alt="Фотографии с ивента" />
+          <img className="eventPage-img-photo" src={img} alt="Фотографии с ивента" />
         </div>
         {event.photos.map((photo) => (
           <div key={event.id} className="eventPage-img">
-            <img src={photo} alt="Фотографии с ивента" />
+            <img className="eventPage-img-photo" src={photo.image} alt="Фотографии с ивента" />
           </div>
         ))}
       </div>

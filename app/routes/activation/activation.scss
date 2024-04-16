@@ -8,10 +8,17 @@
     padding: 40px 64px 40px 64px;
     box-sizing: border-box;
     border-radius: 24px;
-    background: rgb(244, 244, 244);
+    background: rgb(255, 255, 255);
     width: 448px;
-    height: 351px;
     gap: 80px;
+
+    .title{
+        margin: 0;
+        padding: 0;
+        @include heading_2();
+        color: rgb(28, 28, 28);
+        line-height: 31.2px;
+    }
 
     .text {
         margin: 0;
@@ -23,5 +30,6 @@
 
     .back-btn {
         @include button_main();
+        @include paragraph_medium();
     }
 }

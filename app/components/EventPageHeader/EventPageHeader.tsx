@@ -23,7 +23,7 @@ export default function EventPageHeader({ event }: EventPageHeaderProps) {
         <div className="eventPage-text-container">
           <p className="text">{event.location_address}</p>
           <p className="text-gray">{formatedDate}</p>
-          <p className="text">{event.event_status}</p>
+          <p className="text">{event.registration_status}</p>
         </div>
         <div className="btn-container">
           <button type="button" className="btn-primary">
@@ -53,8 +53,7 @@ export default function EventPageHeader({ event }: EventPageHeaderProps) {
       <div className="eventPage-img-container">
         <img className="eventPage-img" src={eventImg} alt="Картинка события" />
       </div>
-
-      
+     
     </section>
   );
 }

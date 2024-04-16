@@ -1,10 +1,10 @@
 
 const experienceOptions = [
   { value: 'no_experience', label: 'Нет опыта' },
-  { value: '1_year', label: 'От 1 года' },
-  { value: '3_years', label: 'От 3 лет' },
-  { value: '5_years', label: 'От 5 лет' },
-  { value: 'other', label: 'Другое' },
+  { value: 'more_1_year', label: 'От 1 года' },
+  { value: 'more_3_years', label: 'От 3 лет' },
+  { value: 'more_5_years', label: 'От 5 лет' },
+  { value: 'other_experience', label: 'Другое' },
 ] as const;
 
 const participationFormatOptions = [
@@ -13,19 +13,19 @@ const participationFormatOptions = [
 ] as const;
 
 const directionOptions = [
-  { value: 'backend', label: 'Backend' },
-  { value: 'frontend', label: 'Frontend' },
-  { value: 'mobile', label: 'Mobile' },
-  { value: 'qa', label: 'QA' },
-  { value: 'ml', label: 'ML' },
-  { value: 'other', label: 'Другое' },
+  { value: 'Backend', label: 'Backend' },
+  { value: 'Frontend', label: 'Frontend' },
+  { value: 'Mobile', label: 'Mobile' },
+  { value: 'QA', label: 'QA' },
+  { value: 'ML', label: 'ML' },
+  { value: 'Other', label: 'Другое' },
 ] as const;
 
 export const radioOptions = {
-  workExperience: experienceOptions,
-  participationFormat : participationFormatOptions
+  experience: experienceOptions,
+  preferred_format : participationFormatOptions
 }
 
 export const checkOptions = {
-  direction: directionOptions
+  specialization: directionOptions
 }

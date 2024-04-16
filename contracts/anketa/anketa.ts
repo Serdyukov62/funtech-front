@@ -34,11 +34,11 @@ export const anketaSlideFields = {
 } as const;
 
 export enum InputAnketaLabels {
-  firstName = 'Имя*',
-  lastName = 'Фамилия*',
+  first_name = 'Имя*',
+  last_name = 'Фамилия*',
   phone = 'Телефон*',
-  workplace = 'Место работы*',
-  position = 'Должность*',
+  employer = 'Место работы*',
+  occupation = 'Должность*',
 }
 
 export type InputAnketaKeys = keyof typeof InputAnketaLabels

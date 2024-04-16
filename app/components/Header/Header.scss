@@ -1,18 +1,37 @@
 .header {
     width: 100%;
     margin: 0;
-    padding: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-
+    padding: 0 122px;
+    padding-top: 40px;
 
     .logo {
         padding: 0;
         margin: 0;
-        margin-top: 40px;
-        margin-left: 122px;
         cursor: pointer;
+    }
+
+    .loader {
+        width: 48px;
+        height: 64px;
+        border: 5px solid #FFF;
+        border-bottom-color: rgb(252, 224, 0);
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     }
 
     .button {
@@ -24,8 +43,6 @@
         border-radius: 12px;
         background-color: inherit;
         margin: 0;
-        margin-top: 40px;
-        margin-right: 122px;
         cursor: pointer;
         color: rgb(28, 28, 28);
         font-family: 'Poppins-Medium', sans-serif, Arial;
@@ -33,4 +50,5 @@
         line-height: 20px;
         text-align: center;
     }
+
 }

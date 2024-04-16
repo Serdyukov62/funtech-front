@@ -17,7 +17,7 @@ export default observer(function Event({ event, past, onClick }: EventProps) {
     <div onClick={onClick} className="event">
       <img
         className="event-img"
-        src={event.host_photo ? event.host_photo : img}
+        src={event.image}
         alt="Превью мероприятия"
       />
       <div className="text-container">
@@ -26,9 +26,7 @@ export default observer(function Event({ event, past, onClick }: EventProps) {
         <p className="subtitle">{formatedDate}</p>
         {!past && (
           <p className="link">
-            {event.event_status === "on_time"
-              ? "Идет регистрация"
-              : "Регистрация завершена" || "Регистрация отменена"}
+            {event.registration_status}
           </p>
         )}
       </div>

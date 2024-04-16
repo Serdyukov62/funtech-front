@@ -1,0 +1,51 @@
+@import '../../styles/mixins.scss';
+
+.profile {
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+    width: 372px;
+    align-items: center;
+    cursor: pointer;
+
+    .email {
+        margin: 0;
+        padding: 0;
+        margin-right: 16px;
+        @include paragraph_medium();
+    }
+
+    .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+    }
+
+    .button-logout {
+        width: 216px;
+        height: 48px;
+        display: flex;
+        position: absolute;
+        top: 70px;
+        align-items: center;
+        gap: 16px;
+        padding: 8px 12px 8px 12px;
+        border: none;
+        border-radius: 12px;
+        background-color: inherit;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+
+        &_unactive {
+            display: none;
+
+        }
+
+        &:hover{
+            background-color: rgb(226, 226, 226);
+        }
+    }
+}
+
+

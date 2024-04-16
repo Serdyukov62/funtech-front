@@ -1,3 +1,4 @@
+import { ZAnketaForm } from "contracts/anketa/anketa";
 import { BASE_URL } from "~/constants/api";
 
 interface credentials {
@@ -10,7 +11,21 @@ interface activationCredentials{
     token: string | null;
 }
 
- export async function signin (data: credentials)  {
+
+export async function postAnketa(data: ZAnketaForm, id: number, tokenValue: string) {
+    const response = await fetch(`${BASE_URL}/users/${id}/`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Token ${tokenValue}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    return response;
+}
+
+
+ export async function signin (data: credentials) { {
     const response = await fetch(`${BASE_URL}/auth/token/login/`, {
         method: 'POST',
         headers: {
@@ -20,15 +35,13 @@ interface activationCredentials{
     });
     const dataUser = await response.json();
     const errors: string[] = Object.values(dataUser);
-    console.log(dataUser)
-
 
     if (!response.ok) {
         throw new Error(errors.join(', '));
     }
 
     return dataUser;
-}
+}}
 
 export async function signUp (data: credentials)  {
     const response = await fetch(`${BASE_URL}/users/`, {
