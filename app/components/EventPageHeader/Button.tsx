@@ -37,7 +37,7 @@ export default function Button({ user, event, loggedIn }: Props) {
       setMyEvent(true)
     }
 
-    if(event.my_participation.data.id) {
+    if(event) {
         setId(event.my_participation.data.id)
     }
   }, []);
