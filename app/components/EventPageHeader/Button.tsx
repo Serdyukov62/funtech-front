@@ -16,7 +16,6 @@ type Props = {
 
 export default function Button({deleteEventRegistration, buttonText, user, event, loggedIn }: Props) {
   const token = localStorage.getItem("token");
-  console.log(token)
   const navigation = useNavigate();
 
   const [registerEvent, setRegisterEvent] = useState(false);
