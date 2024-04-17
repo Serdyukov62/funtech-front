@@ -15,15 +15,13 @@ type Props = {
   buttonText: string;
 };
 
-export default function Button({buttonText,user, event, loggedIn }: Props) {
-
-
+export default function Button({ buttonText, user, event, loggedIn }: Props) {
   const token = localStorage.getItem("token");
+  const navigation = useNavigate();
 
   const [registerEvent, setRegisterEvent] = useState(false);
-  const navigation = useNavigate();
-  const [myEvent, setMyEvent] = useState()
-  const [id, setId] = useState()
+  const [myEvent, setMyEvent] = useState(false);
+  const [id, setId] = useState();
 
   useEffect(() => {
     const currentEvent = user?.my_events.find(
@@ -31,13 +29,13 @@ export default function Button({buttonText,user, event, loggedIn }: Props) {
     );
     if (currentEvent) {
       setRegisterEvent(true);
-      setMyEvent(true)
+      setMyEvent(true);
     }
 
-    if(event.my_participation.data) {
-        setId(event.my_participation.data.id)
+    if (event.my_participation.data) {
+      setId(event.my_participation.data.id);
     }
-  }, [event]);
+  }, [postRegisterEvent, deleteEventRegistration]);
 
   const handleClick = () => {
     switch (true) {
@@ -51,24 +49,18 @@ export default function Button({buttonText,user, event, loggedIn }: Props) {
         navigation("/signin");
         break;
       case myEvent:
-        deleteEventRegistration(
-          token,
-          `${event.id}`,
-          `${id}`
-        )
-        getEvent(`${event.id}`, token)
+        deleteEventRegistration(token, `${event.id}`, `${id}`);
+        getEvent(`${event.id}`, token);
         setRegisterEvent(false);
-        setMyEvent(false)
+        setMyEvent(false);
         break;
       case !myEvent:
         postRegisterEvent(`${event.id}`, token).then((res) => {
           setId(res.id);
-          getEvent(`${event.id}`, token).then(() => {
-            setRegisterEvent(true);
-            setMyEvent(true);
-            
-          });
+          getEvent(`${event.id}`, token).then(() => {});
         });
+        setRegisterEvent(true);
+        setMyEvent(true);
         break;
     }
   };
