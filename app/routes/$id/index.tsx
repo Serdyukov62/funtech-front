@@ -9,7 +9,6 @@ import Modal from "~/components/Modal/Modal";
 import { useStores } from "~/stores/rootStoreContext";
 
 export default observer(function Index() {
-  const navigation = useNavigate()
   const {
     eventStore: { event, setEvent },
     userStore: { user },
@@ -19,15 +18,15 @@ export default observer(function Index() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token)
+    if (!token) {
+      setEvent(id);
+    }
     setEvent(id, token);
   }, []);
 
-
-
   return (
     <>
-      <Modal text="Вы зарегистрированы на событие!"/>
+      <Modal text="Вы зарегистрированы на событие!" />
       <section className="event-in">
         {event?.case({
           pending: () => <Loader />,
@@ -38,7 +37,7 @@ export default observer(function Index() {
           fulfilled: (value) => <EventPageMain event={value} />,
         })}
       </section>
-      <Footer/>
+      <Footer />
     </>
   );
 });

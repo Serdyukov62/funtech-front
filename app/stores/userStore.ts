@@ -22,6 +22,7 @@ export default class UserStore {
       .then((user) => {
         this.loggedIn = true;
         this.user = user;
+        this.firstLogin();
       })
       .catch((err) => {
         this.error = err;
@@ -42,6 +43,10 @@ export default class UserStore {
   logOut = () => {
     this.user = null;
     this.loggedIn = false;
+  };
+
+  firstLogin = () => {
+    return true;
   };
 
   addUserEvents = (data: string) => {

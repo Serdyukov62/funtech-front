@@ -50,10 +50,11 @@ export default observer(function SignIn() {
   const [err, setErr] = useState(null);
 
   function activation() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const uid = urlParams.get("uid");
-    const token = urlParams.get("token");
-    const dataActivation = { uid, token };
+    const urlParams = new URLSearchParams(window?.location.search);
+    const dataActivation = {
+      uid: urlParams.get("uid"),
+      token: urlParams.get("token"),
+    };
 
     if (dataActivation.uid && dataActivation.token) {
       activate(dataActivation);
@@ -70,10 +71,10 @@ export default observer(function SignIn() {
     formState: { isSubmitting, errors },
   } = useForm<ZSignIn>({
     resolver,
-    mode: 'onBlur',
+    mode: "onBlur",
   });
 
-  
+  const [firstLogin, setFirstLogin] = useState(false);
 
   const onSubmit = (data: ZSignIn) => {
     if (!data) {
@@ -81,12 +82,12 @@ export default observer(function SignIn() {
     }
     signin(data)
       .then((userToken: string) => {
+        setFirstLogin(true);
+
         if (userToken) {
           localStorage.setItem("token", userToken);
-          getUserInfo(userToken)
-          .then(() => {
-            user?.profile_full ? navigation("/") : navigation("/anketa");
-          })
+          getUserInfo(userToken);
+          firstLogin ? navigation("/anketa") : navigation("/");
         }
       })
       .catch((e) => {
@@ -111,8 +112,18 @@ export default observer(function SignIn() {
           </button>
         </div>
         <div className="form-container">
-          <FormInput register={register} errors={errors} name="email" type="email" />
-          <FormInput register={register} errors={errors} name="password" type="password" />
+          <FormInput
+            register={register}
+            errors={errors}
+            name="email"
+            type="email"
+          />
+          <FormInput
+            register={register}
+            errors={errors}
+            name="password"
+            type="password"
+          />
           {err ? <p className="error">{err}</p> : null}
         </div>
 

@@ -29,7 +29,6 @@ export async function postAnketa(
 
   if (!response.ok) {
     throw new Error(response.statusText);
-
   }
 
   return dataUser;
@@ -68,7 +67,7 @@ export async function signUp(data: credentials) {
   if (!response.ok) {
     throw new Error(Object.values(dataUser).join(", "));
   }
-  return dataUser
+  return dataUser;
 }
 
 export async function getUser(tokenValue: string) {
@@ -114,41 +113,58 @@ export async function activate(data: activationCredentials) {
   }
 }
 
-export async function getEvent(id: string | undefined, token: string) {
-  const res = await fetch(`${BASE_URL}/events/${id}/`,{
-    headers: {
-      Authorization: `Token ${token}`
-    }
-  });
+export async function getEvent(id: string | undefined, token: string | undefined) {
+  if (token) {
+    const authRes = await fetch(`${BASE_URL}/events/${id}/`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    const data = await authRes.json();
+    return data;
+  }
+  const res = await fetch(`${BASE_URL}/events/${id}/`);
+
   const data = await res.json();
+  const errors = Object.values(data);
+  if (!res.ok) {
+    throw new Error(errors.join(", "));
+  }
   return data;
 }
 
-export async function postRegisterEvent(id:string, token: string) {
-    const res = await fetch(`${BASE_URL}/events/${id}/registrations/`, {
-        method: "POST",
-        headers: {
-            Authorization: `Token ${token}`
-        }
-    })
+export async function postRegisterEvent(id: string, token: string) {
+  const res = await fetch(`${BASE_URL}/events/${id}/registrations/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
 
-    const data = await res.json();
-    const errors = Object.values(data);
-    if (!res.ok) {
-        throw new Error(errors.join(", "));
-    }
-    return data;
+  const data = await res.json();
+  const errors = Object.values(data);
+  if (!res.ok) {
+    throw new Error(errors.join(", "));
+  }
+  return data;
 }
 
-export async function deleteEventRegistration(token: string, event_id: string, id: string) {
-    const res = await fetch(`${BASE_URL}/events/${event_id}/registrations/${id}/`, {
-        method: "DELETE",
-        headers: {
-            Authorization: `Token ${token}`
-        }
-    })
-    const errors = Object.values(await res.json());
-    if (!res.ok) {
-        throw new Error(errors.join(", "));
+export async function deleteEventRegistration(
+  token: string,
+  event_id: string,
+  id: string
+) {
+  const res = await fetch(
+    `${BASE_URL}/events/${event_id}/registrations/${id}/`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${token}`,
+      },
     }
+  );
+  const errors = Object.values(await res.json());
+  if (!res.ok) {
+    throw new Error(errors.join(", "));
+  }
 }

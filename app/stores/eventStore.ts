@@ -33,7 +33,7 @@ export default class EventsStore {
         this.pastEvents = fromPromise(getPastEvents());
     }
 
-    setEvent = (id: string | undefined, token: string) => {
+    setEvent = (id: string | undefined, token: string | undefined) => {
         this.event = fromPromise(getEvent(id, token));
     }
 
