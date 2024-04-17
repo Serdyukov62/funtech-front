@@ -3,6 +3,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { observer } from "mobx-react-lite";
 import Afisha from "~/components/Afisha/Afisha";
 import Events from "~/components/Events/Events";
+import Footer from "~/components/Footer/Footer";
 import Loader from "~/components/Loader/Loader";
 import RandomCoffee from "~/components/RandomCoffee/RandomCoffee";
 import { useStores } from "~/stores/rootStoreContext";
@@ -36,6 +37,7 @@ export default observer(function Index() {
           <Events Events={value} text="Прошедшие события" />
         ),
       })}
+      <Footer/>
     </>
   );
 });

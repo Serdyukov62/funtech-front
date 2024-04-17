@@ -14,15 +14,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "@remix-run/react";
 import { postAnketa } from "~/utils/api";
+import { observer } from "mobx-react-lite";
+import { useStores } from "~/stores/rootStoreContext";
 
-interface Props {
-  id: number | undefined;
-  token: string | null;
-}
-
-export function AnketaForm({ id, token }: Props) {
+export function AnketaForm() {
   const [count, setCount] = useState(0);
   const slide = `Slide${count}`;
+
+  const {
+    userStore: { setUser, user },
+  } = useStores();
 
   const slidesCount = Object.keys(anketaSlideFields).length;
   const navigation = useNavigate();
@@ -38,9 +39,15 @@ export function AnketaForm({ id, token }: Props) {
   });
 
   const onSubmit = (data: ZAnketaForm) => {
-    console.log(data);
-    if (id !== null && token !== null) {
-      postAnketa(data, id!, token);
+    const token = localStorage.getItem("token");
+
+    if (token !== null) {
+      postAnketa(data, user?.id, token).then((user) => {
+        if (user) {
+          setUser(user);
+          navigation("/");
+        }
+      });
     }
   };
 
@@ -335,3 +342,5 @@ export function AnketaForm({ id, token }: Props) {
     </div>
   );
 }
+
+export default observer(AnketaForm);

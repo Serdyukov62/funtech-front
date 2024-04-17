@@ -6,9 +6,10 @@ import exit from "../../assets/exit.svg";
 
 interface ProfileProps {
   user: IUserInfo | null;
+  onLogOut: () => void;
 }
 
-export default function Profile({ user }: ProfileProps): ReactElement {
+export default function Profile({ user,onLogOut }: ProfileProps): ReactElement {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -22,6 +23,7 @@ export default function Profile({ user }: ProfileProps): ReactElement {
         <button
           className={`button-logout${!visible ? "_unactive" : ""}`}
           type="button"
+          onClick={onLogOut}
         >
           <img src={exit} alt="Иконка выхода" />
           <p>Выйти</p>

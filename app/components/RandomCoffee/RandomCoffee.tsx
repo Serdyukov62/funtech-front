@@ -1,4 +1,4 @@
-import img from '../../assets/Illustration_Coffee-Break.png'
+import img from '../../assets/Illustration_Coffee-Break.svg'
 
 export default function RandomCoffee() {
   return (

@@ -20,13 +20,29 @@ const storage = createCookieSessionStorage({
 
 export async function createUserSession(token: string, redirectPath: string) {
   const session = await storage.getSession();
-  session.set("token", token); // Сохраняем токен в куки
+  session.set("token", token);
+   // Сохраняем токен в куки
 
   return redirect(redirectPath, {
     headers: {
       "Set-Cookie": await storage.commitSession(session),
     },
   });
+}
+
+export async function createUserEmail(email: string, redirectPath: string) {
+  const session = await storage.getSession();
+  session.set('email', email)
+
+  return redirect(redirectPath, {
+    headers: {
+      "Set-Cookie": await storage.commitSession(session),
+    },
+  })
+}
+
+export async function getUserEmail(request: Request) {
+  return storage.getSession(request.headers.get("Cookie"))
 }
 
 export async function getUserSession(request: Request) {

@@ -1,37 +1,25 @@
 import { Subevent } from "contracts/types/event";
-import photo from "../../assets/photo-host.png";
+import EventPageProgramProfile from "../EventPageProgramProfile/EventPageProgramProfile";
 
 interface EventPageProgramProps {
   event: Subevent;
 }
 
-export default function EventPageProgram({event}: EventPageProgramProps) {
-
+export default function EventPageProgram({ event }: EventPageProgramProps) {
   function formateTime(time: string) {
-    const [hours, minutes] = time.split(':');
-    return `${hours}:${minutes}`
+    const [hours, minutes] = time.split(":");
+    return `${hours}:${minutes}`;
   }
 
   return (
     <div className="eventPage-time-row">
       <h4 className="title-time">{formateTime(event.time)}</h4>
-      <p className="subtitle">{event.title}</p>
-      <div className="eventPage-time-profile">
-        <div className="eventPage-time-profile-img">
-          <img
-            className="eventPage-time-photo"
-            src={photo}
-            alt="Фото спикера"
-          />
-        </div>
-        <div className="eventPage-time-text-container">
-          <h5 className="title-profile">Алексей Сидорин</h5>
-          <p className="subtitle-company">Яндекс</p>
-          <p className="subtitle-profile">
-            Руководитель блока «Интранет» HR Tech
-          </p>
-        </div>
+      <div className="subtitle-container">
+        <p className="subtitle">{event.title}</p>
       </div>
+      {event.speaker.length > 0 && event.speaker.map((speaker) => (
+        <EventPageProgramProfile key={speaker.id} speaker={speaker}/>
+      ))}
     </div>
   );
 }

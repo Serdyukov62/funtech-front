@@ -1,6 +1,6 @@
 import { ZAnketaForm } from 'contracts/anketa/anketa';
 import { ZSignIn } from 'contracts/sign/sign';
-import { IEvent } from './event';
+import { IEvent, Subevent } from './event';
 
 type TUser = Omit<ZSignIn, 'password'> & ZAnketaForm;
 
@@ -33,7 +33,7 @@ export const signIn = async (data: ZSignIn) => {
 }
 
 export interface IUserInfo {
-  id: number
+  id: number | undefined
   email: string
   first_name: string | null
   last_name: string | null
@@ -48,6 +48,6 @@ export interface IUserInfo {
   consent_vacancy_data_processing: boolean
   consent_random_coffee: boolean
   profile_full: boolean
-  my_events: IEvent[],
+  my_events: Subevent[],
   isLoggedIn: boolean,
 }

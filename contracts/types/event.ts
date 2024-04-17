@@ -22,13 +22,13 @@ export interface IEvent {
     host_company: string
     host_position: string
     event_link: string
-    photos: string[]
+    photos: Photos[]
   }
   
   export interface Subevent {
-    id: number
+    event_id: number
     event: string
-    speaker: Speaker
+    speaker: Speaker[]
     title: string
     time: string
   }
@@ -42,4 +42,11 @@ export interface IEvent {
     contacts: string
     position: string
     photo: string
+  }
+
+  export interface Photos {
+    id: number
+    image: string
+    added: string
+    event: number
   }

@@ -1,17 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import tgIcon from "../../assets/tgIcon.svg";
-import eventImg from "../../assets/Illustration_Checkbox.png";
 import { IEvent } from "contracts/types/event";
 import { formatDate } from "~/utils/formatDate";
+import { observer } from "mobx-react-lite";
+import { useStores } from "~/stores/rootStoreContext";
+import { useNavigate } from "@remix-run/react";
+import Button from "./Button";
 
 interface EventPageHeaderProps {
   event: IEvent;
 }
 
-export default function EventPageHeader({ event }: EventPageHeaderProps) {
+export default observer(function EventPageHeader({
+  event,
+}: EventPageHeaderProps) {
   const [shareButton, setShareButton] = useState(false);
+  const [registerEvent, setRegisterEvent] = useState(false);
+
+
+
+
+  const {
+    userStore: { loggedIn, user },
+  } = useStores();
 
   const formatedDate = formatDate(event.datetime);
+
+
+  useEffect(() => {
+    const currentEvent = user?.my_events.find(
+      (myEvent) => myEvent.event_id === event.id
+    );
+    if (currentEvent) {
+      setRegisterEvent(true);
+    }
+  }, []);
+
+  
+
+  const handleShareClick = () => {
+    if (shareButton) {
+      const shareUrl = "https://t.me/share/url?url=";
+      const shareText = event.title;
+      const shareWindow = window.open(
+        shareUrl +
+          encodeURIComponent(window.location.href) +
+          "&text=" +
+          encodeURIComponent(shareText),
+        "_blank"
+      );
+      shareWindow?.focus();
+    } else {
+      setShareButton(!shareButton);
+    }
+  };
 
   return (
     <section className="eventPage">
@@ -21,14 +63,14 @@ export default function EventPageHeader({ event }: EventPageHeaderProps) {
           <p className="subtitle">Организатор: {event.host_company}</p>
         </div>
         <div className="eventPage-text-container">
-          <p className="text">{event.location_address}</p>
+          <p className="text">
+            {event.format === "Онлайн" ? event.format : event.location_address}
+          </p>
           <p className="text-gray">{formatedDate}</p>
           <p className="text">{event.registration_status}</p>
         </div>
         <div className="btn-container">
-          <button type="button" className="btn-primary">
-            <p className="btn-text">Хочу участвовать</p>
-          </button>
+          <Button user={user} event={event} loggedIn={loggedIn} />
           <button
             onClick={() => {
               setShareButton(!shareButton);
@@ -40,6 +82,7 @@ export default function EventPageHeader({ event }: EventPageHeaderProps) {
           </button>
           <button
             type="button"
+            onClick={handleShareClick}
             className={`btn-telegramm ${
               shareButton && "btn-telegramm-pressed"
             }`}
@@ -51,9 +94,12 @@ export default function EventPageHeader({ event }: EventPageHeaderProps) {
       </div>
 
       <div className="eventPage-img-container">
-        <img className="eventPage-img" src={eventImg} alt="Картинка события" />
+        <img
+          className="eventPage-img"
+          src={event.image}
+          alt="Картинка события"
+        />
       </div>
-     
     </section>
   );
-}
+});

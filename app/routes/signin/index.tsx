@@ -1,64 +1,62 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ActionFunctionArgs } from "@remix-run/node";
-import {
-  Form,
-  json,
-  useActionData,
-  useNavigate,
-} from "@remix-run/react";
+
+import { useNavigate } from "@remix-run/react";
 import {
   ZSignIn,
   inputSignInFormLabels,
   signInSchema,
 } from "contracts/sign/sign";
-import { HTMLInputTypeAttribute, useEffect } from "react";
-import { getValidatedFormData, useRemixForm } from "remix-hook-form";
-import { badRequest } from "~/utils/request.server";
+import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import icon from "../../assets/Icons-eye.svg";
 import { activate, signin } from "~/utils/api";
-import { createUserSession } from "~/utils/session.server";
+
 import { observer } from "mobx-react-lite";
+import { useForm } from "react-hook-form";
+import { useStores } from "~/stores/rootStoreContext";
 
 const resolver = zodResolver(signInSchema);
 
-
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const {
-    errors,
-    data,
-    receivedValues: defaultValues,
-  } = await getValidatedFormData<ZSignIn>(request, resolver);
-  if (errors) {
-    return json({ errors, defaultValues, formError: null });
-  }
-
-  console.log(data);
-
-  const user = await signin(data);
-
-  if (!user) {
-    return badRequest({
-      formError: "Логин или пароль введены неверно, попробуйте ещё раз.",
-      defaultValues,
-    });
-  }
-
-  return createUserSession(user.auth_token,'/anketa');
-};
+const FormInput = ({
+  name,
+  type,
+  register,
+  errors,
+}: {
+  name: keyof ZSignIn;
+  type: HTMLInputTypeAttribute;
+}) => (
+  <label className="label">
+    <p className="text">{inputSignInFormLabels[name]}</p>
+    <div className="input-container">
+      <input
+        className={errors[name] ? "input error" : "input"}
+        type={type}
+        {...register(name)}
+      />
+      {name === "password" ? (
+        <img src={icon} alt="passwordicon" className="icon"></img>
+      ) : null}
+    </div>
+    {errors[name] && <p className="error">{`${errors[name]?.message}`}</p>}
+  </label>
+);
 
 export default observer(function SignIn() {
-  const actionData = useActionData<typeof action>();
   const navigation = useNavigate();
+  const {
+    userStore: { getUserInfo, user },
+  } = useStores();
+
+  const [err, setErr] = useState(null);
 
   function activation() {
     const urlParams = new URLSearchParams(window.location.search);
     const uid = urlParams.get("uid");
     const token = urlParams.get("token");
+    const dataActivation = { uid, token };
 
-    const data = { uid, token };
-
-    if (data.uid && data.token) {
-      activate(data);
+    if (dataActivation.uid && dataActivation.token) {
+      activate(dataActivation);
     }
   }
 
@@ -68,38 +66,41 @@ export default observer(function SignIn() {
 
   const {
     register,
+    handleSubmit,
     formState: { isSubmitting, errors },
-  } = useRemixForm<ZSignIn>({
+  } = useForm<ZSignIn>({
     resolver,
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
-  const FormInput = ({
-    name,
-    type,
-  }: {
-    name: keyof ZSignIn;
-    type: HTMLInputTypeAttribute;
-  }) => (
-    <label className="label">
-      <p className="text">{inputSignInFormLabels[name]}</p>
-      <div className="input-container">
-        <input
-          className={errors[name] ? "input error" : "input"}
-          type={type}
-          {...register(name)}
-        />
-        {name === "password" ? (
-          <img src={icon} alt="passwordicon" className="icon"></img>
-        ) : null}
-      </div>
-      {errors[name] && <p className="error">{`${errors[name]?.message}`}</p>}
-    </label>
-  );
+  
+
+  const onSubmit = (data: ZSignIn) => {
+    if (!data) {
+      return;
+    }
+    signin(data)
+      .then((userToken: string) => {
+        if (userToken) {
+          localStorage.setItem("token", userToken);
+          getUserInfo(userToken)
+          .then(() => {
+            user?.profile_full ? navigation("/") : navigation("/anketa");
+          })
+        }
+      })
+      .catch((e) => {
+        setErr(e.message);
+      });
+  };
 
   return (
     <>
-      <Form className="signin-form" method="POST">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="signin-form"
+        method="POST"
+      >
         <h2 className="title">Вход</h2>
         <div className="switch-container">
           <button type="button" className="mail-btn">
@@ -110,11 +111,9 @@ export default observer(function SignIn() {
           </button>
         </div>
         <div className="form-container">
-          <FormInput name="email" type="email" />
-          <FormInput name="password" type="password" />
-          {actionData?.formError && (
-            <p className="error">{actionData.formError}</p>
-          )}
+          <FormInput register={register} errors={errors} name="email" type="email" />
+          <FormInput register={register} errors={errors} name="password" type="password" />
+          {err ? <p className="error">{err}</p> : null}
         </div>
 
         <button
@@ -135,7 +134,7 @@ export default observer(function SignIn() {
         >
           Зарегистрироваться
         </button>
-      </Form>
+      </form>
     </>
   );
 });

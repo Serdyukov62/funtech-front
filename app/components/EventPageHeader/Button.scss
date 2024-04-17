@@ -1,0 +1,24 @@
+@import '../../styles/mixins.scss';
+
+.btn-primary {
+    width: 268px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 24px 14px 24px;
+    border-radius: 12px;
+    background: $button-main-color;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $button-hover-color;
+    }
+
+    .btn-text {
+        margin: 0;
+        padding: 0;
+        @include caption_large
+    }
+}

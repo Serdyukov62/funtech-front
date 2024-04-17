@@ -1,88 +1,91 @@
 import icon from "../../assets/Icons-eye.svg";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { Form, json, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import {
   ZSignUp,
   inputSignUpFormLabels,
   signUpSchema,
 } from "contracts/sign/sign";
-import { HTMLInputTypeAttribute } from "react";
-import { getValidatedFormData, useRemixForm } from "remix-hook-form";
-import Header from "~/components/Header/Header";
+import { observer } from "mobx-react-lite";
+import { HTMLInputTypeAttribute, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useStores } from "~/stores/rootStoreContext";
 import { signUp } from "~/utils/api";
-
 const resolver = zodResolver(signUpSchema);
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const {
-    errors,
-    data,
-    receivedValues: defaultValues,
-  } = await getValidatedFormData<ZSignUp>(request, resolver);
-  if (errors) {
-    return json({ errors, defaultValues });
-  }
+const FormInput = ({
+  name,
+  type,
+  register,
+  errors,
+}: {
+  name: keyof ZSignUp;
+  type: HTMLInputTypeAttribute;
+}) => (
+  <label className="label">
+    <p className="text">{inputSignUpFormLabels[name]}</p>
+    <div className="input-container">
+      <input
+        className={errors[name] ? "input error" : "input"}
+        type={type}
+        {...register(name)}
+      />
+      {type === "password" ? (
+        <img src={icon} alt="passwordicon" className="icon"></img>
+      ) : null}
+    </div>
+    {errors[name] && <p className="error">{`${errors[name]?.message}`}</p>}
+  </label>
+);
 
-  const user = await signUp(data);
 
-  if (!user) {
-    return json({
-      errors: {
-        formError: "Данные введены неверно, попробуйте ещё раз.",
-      },
-      defaultValues,
-    });
-  }
-
-  // TODO : регистрация + создание куки с токеном
-  return redirect("/activation");
-};
-
-export default function SignUp() {
+export default observer(function SignUp() {
   const navigation = useNavigate();
+  const [errorApi, setErrorApi] = useState(null)
+
+  const {userStore: {setEmail, loggedIn}} = useStores()
+
+  useEffect(() => {
+    if(loggedIn) navigation("/")
+  },[loggedIn])
+
+  
   const {
     register,
+    handleSubmit,
     formState: { isSubmitting, errors },
-  } = useRemixForm<ZSignUp>({
+  } = useForm<ZSignUp>({
     resolver,
     mode: "onBlur",
   });
 
-  const FormInput = ({
-    name,
-    type,
-  }: {
-    name: keyof ZSignUp;
-    type: HTMLInputTypeAttribute;
-  }) => (
-    <label className="label">
-      <p className="text">{inputSignUpFormLabels[name]}</p>
-      <div className="input-container">
-        <input
-          className={errors[name] ? "input error" : "input"}
-          type={type}
-          {...register(name)}
-        />
-        {type === "password" ? (
-          <img src={icon} alt="passwordicon" className="icon"></img>
-        ) : null}
-      </div>
-      {errors[name] && <p className="error">{`${errors[name]?.message}`}</p>}
-    </label>
-  );
+  
+  const onSubmit = async (data: ZSignUp) => {
+  signUp(data)
+    .then((res) => {
+      setEmail(res)
+      navigation("/activation");
+    })
+    .catch((e) => {
+      setErrorApi(e.message)
+    })
+  };
 
   return (
     <>
-      <Header />
-      <Form className="signup-form" method="POST">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="signup-form"
+        method="POST"
+      >
         <h2 className="title">Регистрация</h2>
         <p className="title-text">Введите email и придумайте пароль</p>
         <div className="form-container">
-          <FormInput name="email" type="email" />
-          <FormInput name="password" type="password" />
-          <FormInput name="confirmPassword" type="password" />
+          <FormInput register={register} errors={errors} name="email" type="email" />
+          <FormInput register={register} errors={errors} name="password" type="password" />
+          <FormInput register={register} errors={errors} name="confirmPassword" type="password" />
+            {errorApi ? <p className="error">{errorApi}</p> : null}
         </div>
         <button className="submit-btn" type="submit" disabled={isSubmitting}>
           Готово
@@ -94,7 +97,7 @@ export default function SignUp() {
         >
           Назад
         </button>
-      </Form>
+      </form>
     </>
   );
-}
+});

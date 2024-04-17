@@ -1,5 +1,4 @@
 import { IEvent } from "contracts/types/event";
-import img from "../../assets/Size=Small.png";
 import { formatDate } from "~/utils/formatDate";
 import { observer } from "mobx-react-lite";
 

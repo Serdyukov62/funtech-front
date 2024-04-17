@@ -1,17 +1,26 @@
-import { useLocation, useNavigate } from "@remix-run/react";
+import { useLoaderData, useLocation, useNavigate } from "@remix-run/react";
 import logo from "../../assets/Logo.svg";
 import { observer } from "mobx-react-lite";
 import { useStores } from "~/stores/rootStoreContext";
 import Profile from "../Profile/Profile";
-import Loader from "../Loader/Loader";
+
+
 
 export default observer(function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
   const {
-    userStore: { isLoading, user },
+    userStore: { isLoading, user,logOut },
   } = useStores();
+
+  const handleLogOut = () => {
+    if (user) {
+        localStorage.removeItem("token");
+        logOut();
+        navigate('/')
+    }
+  };
 
   const paths =
     location.pathname === "/signin" ||
@@ -42,7 +51,7 @@ export default observer(function Header() {
                   Войти
                 </button>
               ) : (
-                <Profile user={user} />
+                <Profile onLogOut={handleLogOut} user={user} />
               )}
             </>
           )}

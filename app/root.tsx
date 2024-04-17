@@ -7,17 +7,15 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useLoaderData,
   useLocation,
-  useNavigate,
   useRouteError,
 } from "@remix-run/react";
-import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { LinksFunction } from "@remix-run/node";
 import { RootStoreProvider, useStores } from "./stores/rootStoreContext";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { getUserSession } from "./utils/session.server";
 import Header from "./components/Header/Header";
+import { YMaps } from "@pbe/react-yandex-maps";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: styles }];
@@ -43,6 +41,7 @@ export function ErrorBoundary() {
   );
 }
 
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const notMainLocation =
@@ -60,6 +59,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
+      
       <body
         className={` ${notMainLocation ? "not-main" : "main"}`}
         suppressHydrationWarning={true}
@@ -72,20 +72,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return getUserSession(request);
-};
-
 export default observer(function App() {
+ 
   const {
-    userStore: { getUserInfo },
-  } = useStores();
-
-  const navigation = useNavigate();
-
-  const userToken = useLoaderData<typeof loader>();
-
-  const {
+    userStore: { getUserInfo},
     eventStore: { getFutureEventsAction, getPastEventsAction },
   } = useStores();
 
@@ -94,19 +84,18 @@ export default observer(function App() {
     getPastEventsAction();
   }, []);
 
+
   useEffect(() => {
-    if (userToken.data.token) {
-      getUserInfo(userToken.data.token)
-      .then((user) => {
-        !user?.profile_full && navigation('/anketa');
-      })
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUserInfo(token)
     }
   }, []);
 
   return (
-    <>
+    <YMaps>  
       <Header/>
       <Outlet />
-    </>
+    </YMaps>
   );
 });

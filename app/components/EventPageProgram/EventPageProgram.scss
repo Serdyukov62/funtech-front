@@ -3,7 +3,6 @@
 .eventPage-time-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     box-sizing: border-box;
     border-top: 1px solid rgb(226, 226, 226);
     padding: 32px 0;
@@ -14,15 +13,24 @@
         color: rgb(28, 28, 28);
         @include heading_3();
         text-align: left;
+        width: 166px;
     }
 
-    .subtitle {
-        margin: 0;
-        padding: 0;
-        color: rgb(28, 28, 28);
-        @include paragraph_large();
-        text-align: left;
+    .subtitle-container {
+        margin-left: 40px;
+        margin-right: 40px;
+        width: 475px;
+        box-sizing: border-box;
+        .subtitle {
+            margin: 0;
+            padding: 0;
+            color: rgb(28, 28, 28);
+            @include paragraph_large();
+            text-align: left;
+        }
     }
+
+
 
     .eventPage-time-profile {
         display: flex;

@@ -33,6 +33,13 @@
         text-align: center;
     }
 
+    .online{
+        color: rgb(28, 28, 28);
+        @include paragraph_large();
+        color: rgb(158, 155, 152);
+        text-align: center;
+    }
+
     .btn {
         width: 268px;
         height: 48px;

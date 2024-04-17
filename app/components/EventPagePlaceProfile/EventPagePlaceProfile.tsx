@@ -1,14 +1,26 @@
+import { IEvent } from "contracts/types/event";
+import { formatDate } from "~/utils/formatDate";
 
+interface EventPagePlaceProfileProps {
+  event: IEvent;
+}
 
-export default function EventPagePlaceProfile() {
+export default function EventPagePlaceProfile({
+  event,
+}: EventPagePlaceProfileProps) {
+
   return (
     <div className="eventPage-place-profile">
-        <h3 className="title">Митап HR Tech</h3>
-        <h4 className="subtitle">Москва, улица Льва Толстого, 16</h4>
-        <p className="text">29 марта 16:00 (МСК) пятница</p>
-        <button type="button" className="btn">
-            <p className="btn-text">Хочу участвовать</p>
-        </button>
+      <h3 className="title">{event.title}</h3>
+      {event.format === "Офлайн" ? (
+        <h4 className="subtitle">{event.location_address}</h4>
+      ) : (
+        <p className="online">Онлайн</p>
+      )}
+      <p className="text">{formatDate(event.datetime)}</p>
+      <button type="button" className="btn">
+        <p className="btn-text">Хочу участвовать</p>
+      </button>
     </div>
-  )
+  );
 }
