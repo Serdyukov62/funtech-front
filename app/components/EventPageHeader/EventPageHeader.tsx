@@ -17,6 +17,8 @@ export default observer(function EventPageHeader({
 }: EventPageHeaderProps) {
   const [shareButton, setShareButton] = useState(false);
 
+
+
   const [buttonText, setButtonText] = useState({
     cancel: "Отменить участие",
     register: "Хочу участвовать",

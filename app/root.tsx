@@ -41,8 +41,8 @@ export function ErrorBoundary() {
   );
 }
 
-
 export function Layout({ children }: { children: React.ReactNode }) {
+
   const location = useLocation();
   const notMainLocation =
     location.pathname === "/signin" ||
@@ -60,12 +60,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      
+
       <body
         className={` ${notMainLocation ? "not-main" : "main"}`}
         suppressHydrationWarning={true}
       >
-        <RootStoreProvider> {children}</RootStoreProvider>
+        {" "}
+          <RootStoreProvider> {children}</RootStoreProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -74,9 +75,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default observer(function App() {
- 
   const {
-    userStore: { getUserInfo},
+    userStore: { getUserInfo },
     eventStore: { getFutureEventsAction, getPastEventsAction },
   } = useStores();
 
@@ -85,16 +85,18 @@ export default observer(function App() {
     getPastEventsAction();
   }, []);
 
+  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      getUserInfo(token)
+      getUserInfo(token);
     }
   }, []);
 
   return (
-    <YMaps>  
-      <Header/>
+    <YMaps>
+      <Header />
       <Outlet />
     </YMaps>
   );

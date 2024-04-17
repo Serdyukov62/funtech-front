@@ -13,7 +13,7 @@ interface EventPagePlaceProfileProps {
 export default observer(function EventPagePlaceProfile({
   event,
 }: EventPagePlaceProfileProps) {
-  const {userStore: {user, loggedIn}} = useStores()
+  const {userStore: {user}} = useStores()
 
   const [buttonText, setButtonText] = useState({
     cancel: "Отменить участие",
@@ -31,7 +31,7 @@ export default observer(function EventPagePlaceProfile({
         <p className="online">Онлайн</p>
       )}
       <p className="text">{formatDate(event.datetime)}</p>
-      <Button deleteEventRegistration={deleteEventRegistration} buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
+      <Button deleteEventRegistration={deleteEventRegistration} buttonText={buttonText} user={user} event={event} />
     </div>
   );
 });

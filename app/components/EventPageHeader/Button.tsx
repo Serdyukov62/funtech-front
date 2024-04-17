@@ -1,6 +1,6 @@
 import { useNavigate } from "@remix-run/react";
+import { IUserInfo } from "contracts/types/UserInfo";
 import { IEvent } from "contracts/types/event";
-import { IUserInfo } from "contracts/types/user";
 import { useEffect, useState } from "react";
 import {
   getEvent,
@@ -14,9 +14,15 @@ type Props = {
   buttonText: string;
 };
 
-export default function Button({deleteEventRegistration, buttonText, user, event, loggedIn }: Props) {
+export default function Button({deleteEventRegistration, buttonText, user, event }: Props) {
   const token = localStorage.getItem("token");
   const navigation = useNavigate();
+
+  const loggedIn = localStorage.getItem("login");
+
+  console.log(!!loggedIn);
+  
+
 
   const [registerEvent, setRegisterEvent] = useState(false);
   const [myEvent, setMyEvent] = useState(false);

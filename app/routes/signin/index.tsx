@@ -8,12 +8,11 @@ import {
 } from "contracts/sign/sign";
 import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import icon from "../../assets/Icons-eye.svg";
-import { activate, signin } from "~/utils/api";
+import { activate } from "~/utils/api";
 
 import { observer } from "mobx-react-lite";
 import { useForm } from "react-hook-form";
 import { useStores } from "~/stores/rootStoreContext";
-import LoaderSmall from "~/components/loaderSmall/loaderSmall";
 
 const resolver = zodResolver(signInSchema);
 
@@ -45,7 +44,7 @@ const FormInput = ({
 export default observer(function SignIn() {
   const navigation = useNavigate();
   const {
-    userStore: { setSignIn, isLoading},
+    userStore: { setSignIn, isLoading },
   } = useStores();
 
   const [err, setErr] = useState(null);

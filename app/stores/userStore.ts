@@ -1,7 +1,7 @@
 import { UserCredentials } from "contracts/types/UserInfo";
 import { IUserInfo } from "contracts/types/user";
 import { makeAutoObservable, runInAction } from "mobx";
-import { IPromiseBasedObservable, fromPromise } from "mobx-utils";
+
 
 import { getUser, signin } from "~/utils/api";
 
@@ -22,10 +22,10 @@ export default class UserStore {
     try {
       const user = await getUser(token);
       runInAction(() => {
-        this.user = user;
         this.isLoading = false;
+        this.setUser(user);
       });
-      return user;
+      return user as IUserInfo;
     } catch (error) {
       this.error = error;
       this.isLoading = false;
@@ -37,13 +37,11 @@ export default class UserStore {
   setSignIn = async (data: UserCredentials) => {
     this.isLoading = true;
     try {
-      const token = await signin(data);
-      const user = await this.getUserInfo(token);
+      const token = await signin(data)
       localStorage.setItem("token", token);
-      runInAction(() => {
-        this.loggedIn = true;
-        this.isLoading = false;
-      });
+      const user = this.getUserInfo(token)
+      localStorage.setItem('login', 'true')
+      this.isLoading = false;
       return user;
     } catch (error) {
       runInAction(() => {
@@ -60,13 +58,14 @@ export default class UserStore {
   };
 
   setUser = (data: IUserInfo) => {
-    return (this.user = data);
+    this.user = data;
   };
 
   logOut = () => {
     this.user = null;
     this.loggedIn = false;
   };
+
 
   addUserEvents = (data: string) => {
     this.userRegisterEvents.push(data);

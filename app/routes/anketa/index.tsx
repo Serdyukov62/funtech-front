@@ -6,8 +6,16 @@ import { useStores } from "~/stores/rootStoreContext";
 
 export default observer(function Anketa() {
   const {
-    userStore: { user, loggedIn },
+    userStore: { user,loggedIn },
   } = useStores();
+
+  
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      user?.profile_full && !loggedIn && navigate("/");
+  },[])
 
   return <AnketaForm />;
 });
