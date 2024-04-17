@@ -13,7 +13,6 @@ export default observer(function EventPagePlaceProfile({
   event,
 }: EventPagePlaceProfileProps) {
   const {userStore: {user, loggedIn}} = useStores()
-  const [registerEvent, setRegisterEvent] = useState(false);
 
   const [buttonText, setButtonText] = useState({
     cancel: "Отменить участие",
@@ -21,14 +20,6 @@ export default observer(function EventPagePlaceProfile({
     record: "Смотреть запись",
   });
 
-  useEffect(() => {
-    const currentEvent = user?.my_events.find(
-      (myEvent) => myEvent.event_id === event.id
-    );
-    if (currentEvent) {
-      setRegisterEvent(true);
-    }
-  }, []);
 
   return (
     <div className="eventPage-place-profile">
@@ -39,7 +30,7 @@ export default observer(function EventPagePlaceProfile({
         <p className="online">Онлайн</p>
       )}
       <p className="text">{formatDate(event.datetime)}</p>
-      <Button buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
+      <Button deleteEventRegistration={deleteEventRegistration} buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
     </div>
   );
 });

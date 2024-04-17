@@ -1,6 +1,7 @@
-import { useNavigate, useParams } from "@remix-run/react";
+import { useParams } from "@remix-run/react";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+import Button from "~/components/EventPageHeader/Button";
 import EventPageHeader from "~/components/EventPageHeader/EventPageHeader";
 import EventPageMain from "~/components/EventPageMain/EventPageMain";
 import Footer from "~/components/Footer/Footer";

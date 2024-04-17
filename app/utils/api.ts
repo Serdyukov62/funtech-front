@@ -1,4 +1,5 @@
 import { ZAnketaForm } from "contracts/anketa/anketa";
+import { IUserInfo } from "contracts/types/user";
 import { BASE_URL } from "~/constants/api";
 
 interface credentials {
@@ -76,12 +77,12 @@ export async function getUser(tokenValue: string) {
       Authorization: `Token ${tokenValue}`,
     },
   });
-  const data = await response.json();
-  const errors = Object.values(data);
+  const user = await response.json();
+  const errors = Object.values(user);
   if (!response.ok) {
     throw new Error(errors.join(", "));
   }
-  return data;
+  return user as IUserInfo;
 }
 
 export async function getFutureEvents() {

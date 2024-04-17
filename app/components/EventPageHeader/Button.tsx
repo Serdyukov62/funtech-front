@@ -3,7 +3,6 @@ import { IEvent } from "contracts/types/event";
 import { IUserInfo } from "contracts/types/user";
 import { useEffect, useState } from "react";
 import {
-  deleteEventRegistration,
   getEvent,
   postRegisterEvent,
 } from "~/utils/api";
@@ -15,7 +14,7 @@ type Props = {
   buttonText: string;
 };
 
-export default function Button({ buttonText, user, event, loggedIn }: Props) {
+export default function Button({deleteEventRegistration, buttonText, user, event, loggedIn }: Props) {
   const token = localStorage.getItem("token");
   const navigation = useNavigate();
 

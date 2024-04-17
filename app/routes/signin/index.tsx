@@ -13,6 +13,7 @@ import { activate, signin } from "~/utils/api";
 import { observer } from "mobx-react-lite";
 import { useForm } from "react-hook-form";
 import { useStores } from "~/stores/rootStoreContext";
+import LoaderSmall from "~/components/loaderSmall/loaderSmall";
 
 const resolver = zodResolver(signInSchema);
 
@@ -44,8 +45,10 @@ const FormInput = ({
 export default observer(function SignIn() {
   const navigation = useNavigate();
   const {
-    userStore: { signIn, getUserInfo },
+    userStore: { getUserInfo },
   } = useStores();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [err, setErr] = useState(null);
 
@@ -78,13 +81,22 @@ export default observer(function SignIn() {
     if (!data) {
       return;
     }
-    signIn(data).then((token) => {
-      if (token) {
-        localStorage.setItem("token", token);
-        getUserInfo(token);
-        navigation("/");
-      }
-    });
+    setIsLoading(true);
+    signin(data)
+      .then((token) => {
+        if (token)
+        getUserInfo(token)
+          .then((user) => {
+            user?.profile_full ? navigation("/") : navigation("/anketa");
+          })
+          .catch((err) => {
+            setErr(err);
+          })
+          .finally(() => setIsLoading(false));
+      })
+      .catch((err) => {
+        setErr(err);
+      });
   };
 
   return (
@@ -127,8 +139,8 @@ export default observer(function SignIn() {
           <p className="text-btn">Не помню пароль</p>
         </button>
 
-        <button className="submit-btn" type="submit" disabled={isSubmitting}>
-          Войти
+        <button className="submit-btn " type="submit" disabled={isSubmitting}>
+          {isLoading ? <div className="loader" /> : "Войти"}
         </button>
         <button
           className="register-btn"

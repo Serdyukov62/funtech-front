@@ -11,30 +11,27 @@ export default class UserStore {
   isLoading: boolean = false;
   userInfo: IUserInfo | null = null;
   userRegisterEvents: string[] = [];
-  firstLogin: IPromiseBasedObservable<boolean> = fromPromise(Promise.resolve(false));
+  firstLogin: IPromiseBasedObservable<boolean> = fromPromise(
+    Promise.resolve(false)
+  );
 
   constructor() {
     makeAutoObservable(this);
   }
 
   getUserInfo = async (token: string) => {
-    this.isLoading = true;
-    Promise.resolve(getUser(token))
-      .then((user) => {
-        this.user = user;
-        this.loggedIn = true;
+    try {
+      this.isLoading = true;
+      const user = await getUser(token).then((user) => {
+        return user;
       })
-      .catch((err) => {
-        this.error = err;
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+      this.user = user;
       return this.user
-  };
-
-  signIn = ({email, password}: {email: string, password: string}) => {
-    return this.firstLogin = fromPromise(signin({email, password}));
+    } catch (error) {
+      this.error = error;
+    } finally {
+      this.isLoading = false;
+    }
   };
 
   setEmail = (data: IUserInfo) => {
@@ -42,7 +39,7 @@ export default class UserStore {
   };
 
   setUser = (data: IUserInfo) => {
-    this.user = data;
+    return (this.user = data);
   };
 
   logOut = () => {

@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "~/stores/rootStoreContext";
 import { useNavigate } from "@remix-run/react";
 import Button from "./Button";
+import { deleteEventRegistration } from "~/utils/api";
 
 interface EventPageHeaderProps {
   event: IEvent;
@@ -15,7 +16,6 @@ export default observer(function EventPageHeader({
   event,
 }: EventPageHeaderProps) {
   const [shareButton, setShareButton] = useState(false);
-  const [registerEvent, setRegisterEvent] = useState(false);
 
   const [buttonText, setButtonText] = useState({
     cancel: "Отменить участие",
@@ -30,17 +30,6 @@ export default observer(function EventPageHeader({
 
   const formatedDate = formatDate(event.datetime);
 
-
-  useEffect(() => {
-    const currentEvent = user?.my_events.find(
-      (myEvent) => myEvent.event_id === event.id
-    );
-    if (currentEvent) {
-      setRegisterEvent(true);
-    }
-  }, [event]);
-
-  
 
   const handleShareClick = () => {
     if (shareButton) {
@@ -74,7 +63,7 @@ export default observer(function EventPageHeader({
           <p className="text">{event.registration_status}</p>
         </div>
         <div className="btn-container">
-          <Button buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
+          <Button deleteEventRegistration={deleteEventRegistration} buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
           <button
             onClick={() => {
               setShareButton(!shareButton);
