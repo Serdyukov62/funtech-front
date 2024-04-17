@@ -92,8 +92,6 @@ export default observer(function App() {
     }
   }, []);
 
-  
-
   return (
     <YMaps>  
       <Header/>

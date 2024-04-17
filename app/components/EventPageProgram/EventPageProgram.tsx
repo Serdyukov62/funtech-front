@@ -12,14 +12,15 @@ export default function EventPageProgram({ event }: EventPageProgramProps) {
   }
 
   return (
-    <div className="eventPage-time-row">
+    <>
+    {event ? <div className="eventPage-time-row">
       <h4 className="title-time">{formateTime(event.time)}</h4>
       <div className="subtitle-container">
         <p className="subtitle">{event.title}</p>
       </div>
-      {event.speaker.length > 0 && event.speaker.map((speaker) => (
-        <EventPageProgramProfile key={speaker.id} speaker={speaker}/>
-      ))}
-    </div>
+      {event.speaker ? <EventPageProgramProfile speaker={event.speaker}/> : ""}
+    </div> : ''}
+    </>
+    
   );
 }

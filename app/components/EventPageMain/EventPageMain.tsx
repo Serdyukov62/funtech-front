@@ -20,14 +20,11 @@ export default function EventPageMain({ event }: EventPageMainProps) {
         </p>
       </div>
       <div className="eventPage-img-container">
-        <div className="eventPage-img">
-          <img className="eventPage-img-photo" src={img} alt="Фотографии с ивента" />
-        </div>
-        {event.photos.map((photo) => (
+        {event.photos ? event.photos.map((photo) => (
           <div key={event.id} className="eventPage-img">
             <img className="eventPage-img-photo" src={photo.image} alt="Фотографии с ивента" />
           </div>
-        ))}
+        )) : ''}
       </div>
 
       <div className="eventPage-host">
@@ -56,7 +53,6 @@ export default function EventPageMain({ event }: EventPageMainProps) {
           <EventPageProgram key={subevent.id} event={subevent} />
         ))}
       </div>
-
         {event.format === 'Офлайн' && <EventPagePlace event={event} />}
       <EventPagePlaceProfile event={event} />
     </section>

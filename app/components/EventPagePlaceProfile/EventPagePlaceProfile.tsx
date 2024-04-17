@@ -15,6 +15,12 @@ export default observer(function EventPagePlaceProfile({
   const {userStore: {user, loggedIn}} = useStores()
   const [registerEvent, setRegisterEvent] = useState(false);
 
+  const [buttonText, setButtonText] = useState({
+    cancel: "Отменить участие",
+    register: "Хочу участвовать",
+    record: "Смотреть запись",
+  });
+
   useEffect(() => {
     const currentEvent = user?.my_events.find(
       (myEvent) => myEvent.event_id === event.id
@@ -33,7 +39,7 @@ export default observer(function EventPagePlaceProfile({
         <p className="online">Онлайн</p>
       )}
       <p className="text">{formatDate(event.datetime)}</p>
-      <Button user={user} event={event} loggedIn={loggedIn} />
+      <Button buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
     </div>
   );
 });

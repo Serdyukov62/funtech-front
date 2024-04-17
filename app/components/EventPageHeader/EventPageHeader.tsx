@@ -17,7 +17,11 @@ export default observer(function EventPageHeader({
   const [shareButton, setShareButton] = useState(false);
   const [registerEvent, setRegisterEvent] = useState(false);
 
-
+  const [buttonText, setButtonText] = useState({
+    cancel: "Отменить участие",
+    register: "Хочу участвовать",
+    record: "Смотреть запись",
+  });
 
 
   const {
@@ -70,7 +74,7 @@ export default observer(function EventPageHeader({
           <p className="text">{event.registration_status}</p>
         </div>
         <div className="btn-container">
-          <Button user={user} event={event} loggedIn={loggedIn} />
+          <Button buttonText={buttonText} user={user} event={event} loggedIn={loggedIn} />
           <button
             onClick={() => {
               setShareButton(!shareButton);
@@ -96,7 +100,7 @@ export default observer(function EventPageHeader({
       <div className="eventPage-img-container">
         <img
           className="eventPage-img"
-          src={event.image}
+          src={event.banner ? event.banner : event.image}
           alt="Картинка события"
         />
       </div>

@@ -12,14 +12,11 @@ type Props = {
   event: IEvent;
   user: IUserInfo;
   loggedIn: boolean;
+  buttonText: string;
 };
 
-export default function Button({ user, event, loggedIn }: Props) {
-  const [buttonText, setButtonText] = useState({
-    cancel: "Отменить участие",
-    register: "Хочу участвовать",
-    record: "Смотреть запись",
-  });
+export default function Button({buttonText,user, event, loggedIn }: Props) {
+
 
   const token = localStorage.getItem("token");
 
@@ -39,7 +36,6 @@ export default function Button({ user, event, loggedIn }: Props) {
 
     if(event.my_participation.data) {
         setId(event.my_participation.data.id)
-        
     }
   }, []);
 
