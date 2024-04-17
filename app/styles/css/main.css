@@ -21,7 +21,6 @@
 @import url("../../components/Modal/Modal.scss");
 @import url("../../components/EventPageHeader/Button.scss");
 @import url("../../routes/succes/succes.scss");
-@import url("../../components/loaderSmall/loaderSmall.scss");
 .main {
   background-color: rgb(255, 255, 255);
   display: flex;
