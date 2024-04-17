@@ -37,7 +37,7 @@ export default function Button({buttonText,user, event, loggedIn }: Props) {
     if(event.my_participation.data) {
         setId(event.my_participation.data.id)
     }
-  }, []);
+  }, [event]);
 
   const handleClick = () => {
     switch (true) {

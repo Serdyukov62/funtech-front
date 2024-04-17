@@ -38,7 +38,7 @@ export default observer(function EventPageHeader({
     if (currentEvent) {
       setRegisterEvent(true);
     }
-  }, []);
+  }, [event]);
 
   
 
