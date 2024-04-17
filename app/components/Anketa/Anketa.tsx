@@ -39,6 +39,7 @@ export function AnketaForm() {
   });
 
   const onSubmit = (data: ZAnketaForm) => {
+    navigation('/succes')
     const token = localStorage.getItem("token");
 
     if (token !== null) {

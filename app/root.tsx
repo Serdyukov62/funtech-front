@@ -49,7 +49,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
     location.pathname === "/signup" ||
     location.pathname === "/activation" ||
     location.pathname === "/reset" ||
-    location.pathname === "/anketa";
+    location.pathname === "/anketa" ||
+    location.pathname === "/succes";
 
   return (
     <html lang="en">

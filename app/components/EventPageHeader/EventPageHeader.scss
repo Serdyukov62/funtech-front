@@ -4,6 +4,7 @@
 .eventPage {
     display: flex;
     gap: 40px;
+    justify-content: space-between;
 
     .eventPage-title-container {
         display: flex;
@@ -100,7 +101,7 @@
     .eventPage-img-container{
         box-sizing: border-box;
         width: 578px;
-        height: 307px;
+        height: 100%;
 
         .eventPage-img{
             width: 100%;
