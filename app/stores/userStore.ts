@@ -1,8 +1,8 @@
-import { Subevent } from "contracts/types/event";
 import { IUserInfo } from "contracts/types/user";
-import {  makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
+import { IPromiseBasedObservable, fromPromise } from "mobx-utils";
 
-import { getUser } from "~/utils/api";
+import { getUser, signin } from "~/utils/api";
 
 export default class UserStore {
   user: IUserInfo | null = null;
@@ -11,6 +11,7 @@ export default class UserStore {
   isLoading: boolean = false;
   userInfo: IUserInfo | null = null;
   userRegisterEvents: string[] = [];
+  firstLogin: IPromiseBasedObservable<boolean> = fromPromise(Promise.resolve(false));
 
   constructor() {
     makeAutoObservable(this);
@@ -18,11 +19,10 @@ export default class UserStore {
 
   getUserInfo = async (token: string) => {
     this.isLoading = true;
-    getUser(token)
+    Promise.resolve(getUser(token))
       .then((user) => {
-        this.loggedIn = true;
         this.user = user;
-        this.firstLogin();
+        this.loggedIn = true;
       })
       .catch((err) => {
         this.error = err;
@@ -30,6 +30,11 @@ export default class UserStore {
       .finally(() => {
         this.isLoading = false;
       });
+      return this.user
+  };
+
+  signIn = ({email, password}: {email: string, password: string}) => {
+    return this.firstLogin = fromPromise(signin({email, password}));
   };
 
   setEmail = (data: IUserInfo) => {
@@ -45,12 +50,7 @@ export default class UserStore {
     this.loggedIn = false;
   };
 
-  firstLogin = () => {
-    return true;
-  };
-
   addUserEvents = (data: string) => {
     this.userRegisterEvents.push(data);
   };
-
 }

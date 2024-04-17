@@ -1,13 +1,28 @@
 import { IEvent } from "contracts/types/event";
+import { useEffect, useState } from "react";
 import { formatDate } from "~/utils/formatDate";
+import Button from "../EventPageHeader/Button";
+import { useStores } from "~/stores/rootStoreContext";
+import { observer } from "mobx-react-lite";
 
 interface EventPagePlaceProfileProps {
   event: IEvent;
 }
 
-export default function EventPagePlaceProfile({
+export default observer(function EventPagePlaceProfile({
   event,
 }: EventPagePlaceProfileProps) {
+  const {userStore: {user, loggedIn}} = useStores()
+  const [registerEvent, setRegisterEvent] = useState(false);
+
+  useEffect(() => {
+    const currentEvent = user?.my_events.find(
+      (myEvent) => myEvent.event_id === event.id
+    );
+    if (currentEvent) {
+      setRegisterEvent(true);
+    }
+  }, []);
 
   return (
     <div className="eventPage-place-profile">
@@ -18,9 +33,7 @@ export default function EventPagePlaceProfile({
         <p className="online">Онлайн</p>
       )}
       <p className="text">{formatDate(event.datetime)}</p>
-      <button type="button" className="btn">
-        <p className="btn-text">Хочу участвовать</p>
-      </button>
+      <Button user={user} event={event} loggedIn={loggedIn} />
     </div>
   );
-}
+});

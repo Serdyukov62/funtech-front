@@ -44,7 +44,7 @@ const FormInput = ({
 export default observer(function SignIn() {
   const navigation = useNavigate();
   const {
-    userStore: { getUserInfo, user },
+    userStore: { signIn, getUserInfo },
   } = useStores();
 
   const [err, setErr] = useState(null);
@@ -74,25 +74,17 @@ export default observer(function SignIn() {
     mode: "onBlur",
   });
 
-  const [firstLogin, setFirstLogin] = useState(false);
-
   const onSubmit = (data: ZSignIn) => {
     if (!data) {
       return;
     }
-    signin(data)
-      .then((userToken: string) => {
-        setFirstLogin(true);
-
-        if (userToken) {
-          localStorage.setItem("token", userToken);
-          getUserInfo(userToken);
-          firstLogin ? navigation("/anketa") : navigation("/");
-        }
-      })
-      .catch((e) => {
-        setErr(e.message);
-      });
+    signIn(data).then((token) => {
+      if (token) {
+        localStorage.setItem("token", token);
+        getUserInfo(token);
+        navigation("/");
+      }
+    });
   };
 
   return (

@@ -28,6 +28,7 @@
     .text {
         margin: 0;
         padding: 0;
+        margin-bottom: 36px;
         color: rgb(158, 155, 152);
         @include paragraph_large();
         text-align: center;
