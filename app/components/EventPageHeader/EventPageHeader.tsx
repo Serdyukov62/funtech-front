@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import tgIcon from "../../assets/tgIcon.svg";
 import { IEvent } from "contracts/types/event";
 import { formatDate } from "~/utils/formatDate";
 import { observer } from "mobx-react-lite";
 import { useStores } from "~/stores/rootStoreContext";
-import { useNavigate } from "@remix-run/react";
+
 import Button from "./Button";
 import { deleteEventRegistration } from "~/utils/api";
 

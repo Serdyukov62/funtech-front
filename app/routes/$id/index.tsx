@@ -12,7 +12,6 @@ import { useStores } from "~/stores/rootStoreContext";
 export default observer(function Index() {
   const {
     eventStore: { event, setEvent },
-    userStore: { user },
   } = useStores();
 
   const { id } = useParams();
@@ -20,7 +19,7 @@ export default observer(function Index() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setEvent(id);
+      setEvent(id, undefined);
     }
     setEvent(id, token);
   }, []);

@@ -4,6 +4,7 @@ import { formatDate } from "~/utils/formatDate";
 import Button from "../EventPageHeader/Button";
 import { useStores } from "~/stores/rootStoreContext";
 import { observer } from "mobx-react-lite";
+import { deleteEventRegistration } from "~/utils/api";
 
 interface EventPagePlaceProfileProps {
   event: IEvent;

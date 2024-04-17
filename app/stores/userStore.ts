@@ -1,5 +1,6 @@
+import { UserCredentials } from "contracts/types/UserInfo";
 import { IUserInfo } from "contracts/types/user";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { IPromiseBasedObservable, fromPromise } from "mobx-utils";
 
 import { getUser, signin } from "~/utils/api";
@@ -11,26 +12,46 @@ export default class UserStore {
   isLoading: boolean = false;
   userInfo: IUserInfo | null = null;
   userRegisterEvents: string[] = [];
-  firstLogin: IPromiseBasedObservable<boolean> = fromPromise(
-    Promise.resolve(false)
-  );
 
   constructor() {
     makeAutoObservable(this);
   }
 
   getUserInfo = async (token: string) => {
+    this.isLoading = true;
     try {
-      this.isLoading = true;
-      const user = await getUser(token).then((user) => {
-        return user;
-      })
-      this.user = user;
-      return this.user
+      const user = await getUser(token);
+      runInAction(() => {
+        this.user = user;
+        this.isLoading = false;
+      });
+      return user;
     } catch (error) {
       this.error = error;
-    } finally {
       this.isLoading = false;
+    } finally {
+      runInAction(() => (this.isLoading = false));
+    }
+  };
+
+  setSignIn = async (data: UserCredentials) => {
+    this.isLoading = true;
+    try {
+      const token = await signin(data);
+      const user = await this.getUserInfo(token);
+      localStorage.setItem("token", token);
+      runInAction(() => {
+        this.loggedIn = true;
+        this.isLoading = false;
+      });
+      return user;
+    } catch (error) {
+      runInAction(() => {
+        this.error = error;
+        this.isLoading = false;
+      });
+    } finally {
+      runInAction(() => (this.isLoading = false));
     }
   };
 

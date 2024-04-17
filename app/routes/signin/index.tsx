@@ -45,10 +45,8 @@ const FormInput = ({
 export default observer(function SignIn() {
   const navigation = useNavigate();
   const {
-    userStore: { getUserInfo },
+    userStore: { setSignIn, isLoading},
   } = useStores();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const [err, setErr] = useState(null);
 
@@ -81,22 +79,13 @@ export default observer(function SignIn() {
     if (!data) {
       return;
     }
-    setIsLoading(true);
-    signin(data)
-      .then((token) => {
-        if (token)
-        getUserInfo(token)
-          .then((user) => {
-            user?.profile_full ? navigation("/") : navigation("/anketa");
-          })
-          .catch((err) => {
-            setErr(err);
-          })
-          .finally(() => setIsLoading(false));
+    setSignIn(data)
+      .then((user) => {
+        user?.profile_full ? navigation("/") : navigation("/anketa");
       })
       .catch((err) => {
         setErr(err);
-      });
+      })
   };
 
   return (

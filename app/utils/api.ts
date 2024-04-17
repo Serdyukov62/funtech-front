@@ -1,16 +1,10 @@
 import { ZAnketaForm } from "contracts/anketa/anketa";
-import { IUserInfo } from "contracts/types/user";
+import { IUserInfo, UserCredentials, activationCredentials } from "contracts/types/UserInfo";
 import { BASE_URL } from "~/constants/api";
 
-interface credentials {
-  email: string;
-  password: string;
-}
 
-interface activationCredentials {
-  uid: string | null;
-  token: string | null;
-}
+
+
 
 export async function postAnketa(
   data: ZAnketaForm,
@@ -35,7 +29,7 @@ export async function postAnketa(
   return dataUser;
 }
 
-export async function signin(data: credentials) {
+export async function signin(data: UserCredentials) {
   {
     const response = await fetch(`${BASE_URL}/auth/token/login/`, {
       method: "POST",
@@ -50,11 +44,11 @@ export async function signin(data: credentials) {
       throw new Error(Object.values(dataUser).join(", "));
     }
 
-    return dataUser.auth_token;
+    return dataUser.auth_token as string;
   }
 }
 
-export async function signUp(data: credentials) {
+export async function signUp(data: UserCredentials) {
   const response = await fetch(`${BASE_URL}/users/`, {
     method: "POST",
     headers: {
