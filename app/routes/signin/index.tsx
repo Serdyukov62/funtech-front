@@ -130,7 +130,7 @@ export default observer(function SignIn() {
           <p className="text-btn">Не помню пароль</p>
         </button>
 
-        <button className={`submit-btn ${isLoading ? 'skeleton' : ''}`} type="submit" disabled={isSubmitting}>
+        <button className='submit-btn'  type="submit" disabled={isSubmitting}>
           {isLoading ? <div className="loader" /> : "Войти"}
         </button>
         <button
