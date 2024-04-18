@@ -44,7 +44,7 @@ const FormInput = ({
 export default observer(function SignIn() {
   const navigation = useNavigate();
   const {
-    userStore: { setSignIn, isLoading },
+    userStore: { setSignIn, isLoading, setUserInfo },
   } = useStores();
 
   const [err, setErr] = useState(null);
@@ -79,8 +79,11 @@ export default observer(function SignIn() {
       return;
     }
     setSignIn(data)
-      .then((user) => {
-        user?.profile_full ? navigation("/") : navigation("/anketa");
+      .then((token) => {
+        setUserInfo(token)
+          .then((user) => {
+            user?.profile_full ? navigation("/") : navigation("/anketa");
+          })
       })
       .catch((err) => {
         setErr(err);
@@ -127,7 +130,7 @@ export default observer(function SignIn() {
           <p className="text-btn">Не помню пароль</p>
         </button>
 
-        <button className="submit-btn " type="submit" disabled={isSubmitting}>
+        <button className={`submit-btn ${isLoading ? 'skeleton' : ''}`} type="submit" disabled={isSubmitting}>
           {isLoading ? <div className="loader" /> : "Войти"}
         </button>
         <button

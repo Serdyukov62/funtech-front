@@ -85,13 +85,8 @@ export default observer(function App() {
     getPastEventsAction();
   }, []);
 
-  
-
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      getUserInfo(token);
-    }
+      getUserInfo();
   }, []);
 
   return (

@@ -65,7 +65,7 @@ export async function signUp(data: UserCredentials) {
   return dataUser;
 }
 
-export async function getUser(tokenValue: string) {
+export async function getUser(tokenValue: string | void) {
   const response = await fetch(`${BASE_URL}/users/me/`, {
     headers: {
       Authorization: `Token ${tokenValue}`,

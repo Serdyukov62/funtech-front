@@ -2,6 +2,7 @@ import { useNavigate } from "@remix-run/react";
 import { IUserInfo } from "contracts/types/UserInfo";
 import { IEvent } from "contracts/types/event";
 import { useEffect, useState } from "react";
+import { useStores } from "~/stores/rootStoreContext";
 import {
   getEvent,
   postRegisterEvent,
@@ -10,7 +11,6 @@ import {
 type Props = {
   event: IEvent;
   user: IUserInfo;
-  loggedIn: boolean;
   buttonText: string;
 };
 
@@ -18,11 +18,7 @@ export default function Button({deleteEventRegistration, buttonText, user, event
   const token = localStorage.getItem("token");
   const navigation = useNavigate();
 
-  const loggedIn = localStorage.getItem("login");
-
-  console.log(!!loggedIn);
-  
-
+  const {userStore: {loggedIn}} = useStores()
 
   const [registerEvent, setRegisterEvent] = useState(false);
   const [myEvent, setMyEvent] = useState(false);
